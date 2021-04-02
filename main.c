@@ -1,68 +1,57 @@
 #include "shell.h"
 
-int main(int argc, char *argv[100], char *env[])
+int main(int argc, char *argv[5],char *env[])
 {
-	int pid;
+	int id;
 	char *buffer;
-	char* path= "/bin/";
-	static char progpath[20];
 	size_t bufsize = 0;
-	int i = 0;
 	char *token;
-	size_t length;
+	char progpath[20];
+	char *path = "/bin/";
 
-        (void)env;
+	(void)argc;
+	(void)env;
 
-	while(1)
+	while (1)
 	{
-		printf("$ ");
+		signal(SIGINT, ctrlc);
+		write(1, "$ ", 2);
 
-		if(getline(&buffer, &bufsize, stdin) == -1)
+		if (getline(&buffer, &bufsize, stdin) == -1)
 		{
-			break;
+			perror("Error");
+			exit(EXIT_FAILURE);
 		}
+
+		rm_last_char_if(buffer);
+
 		if(strcmp(buffer, "exit") == 0)
 		{
 			break;
 		}
-		length = _strlen(buffer);
-		if (buffer[length - 1] == '\n')
-			buffer[length - 1] = '\0';
 
 		token = strtok(buffer, " ");
-		while(token != NULL)
-		{
-			argv[i] = token;
-			token = strtok(NULL," ");
-			i++;
-		}
-		argv[i] = NULL;
 
-		argc = i;
-		for(i = 0; i < argc; i++)
-		{
-			printf("%s <- args || pid :%d || ppid :%d\n", argv[i], getpid(), getppid());
-		}
+		fill_argv(token, argv);
 
-		strcpy(progpath, path);
-		strcat(progpath, argv[0]);
+/*		printf("%s argv[0], %s argv[1]", argv[0], argv[1]); test */
 
+		_strcpy(progpath, path);
+		_strcat(progpath, argv[0]);
 
-		pid = fork();
+		id = fork();
 
-		if (pid == 0)
-		{
-			/**Child*/
-                        execvp(progpath,argv);
-                        fprintf(stderr, "Child process could not do execvp\n");
-		}
-		else
-		{  /**Parents*/
-			wait(NULL);
-			printf("Child exited");
-		}
-
+		if (id == 0)
+ 		{
+ 			execve(progpath, argv, env);
+			fprintf(stderr, "Child process could not do execvp\n");
+ 		}
+ 		else
+ 		{
+ 			wait(NULL);
+ 			printf("Child exited\n");
+ 		}
 	}
 	free(buffer);
-	return(0);
+	return (0);
 }

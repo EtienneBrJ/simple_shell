@@ -55,3 +55,9 @@ int _strlen(char *s)
 	}
 	return (i);
 }
+
+void ctrlc(int i)
+{
+	i = i;
+	write(1, "\n$ ", 3);
+}

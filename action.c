@@ -12,7 +12,9 @@ void rm_last_char_if(char *buffer)
 	}
 }
 
-void add_argv(char *token, char *argv[])
+
+void fill_argv(char *token, char *argv[])
+
 {
 	int i = 0;
 
@@ -24,4 +26,4 @@ void add_argv(char *token, char *argv[])
 	}
 	argv[i] = NULL;
 }
-	       
+
