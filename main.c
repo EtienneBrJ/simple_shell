@@ -43,13 +43,9 @@ int main(int argc, char *argv[100], char *env[])
 		{
 			printf("%s <- args || pid :%d || ppid :%d\n", argv[i], getpid(), getppid());
 		}
-<<<<<<< HEAD
+
 		strcpy(progpath, path);
 		strcat(progpath, argv[0]);
-=======
-		_strcpy(progpath, path);           /**copy /bin/ to file path*/
-		_strcat(progpath, argv[0]);            /**add program to path*/
->>>>>>> 447a808e932f47b1774af982709034578c758590
 
 		pid = fork();
 
