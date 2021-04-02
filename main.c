@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#define BUFFER_LEN 1024
+#include "shell.h"
 
 int main(int argc, char *argv[100], char *env[])
 {
@@ -32,7 +25,7 @@ int main(int argc, char *argv[100], char *env[])
 		{
 			break;
 		}
-		length = strlen(buffer);
+		length = _strlen(buffer);
 		if (buffer[length - 1] == '\n')
 			buffer[length - 1] = '\0';
 
@@ -50,8 +43,10 @@ int main(int argc, char *argv[100], char *env[])
 		{
 			printf("%s <- args || pid :%d || ppid :%d\n", argv[i], getpid(), getppid());
 		}
+
 		strcpy(progpath, path);
 		strcat(progpath, argv[0]);
+
 
 		pid = fork();
 
