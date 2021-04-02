@@ -7,21 +7,22 @@ int main(int argc, char *argv[5],char *env[])
 	size_t bufsize = 0;
 	char *token;
 	char progpath[20];
-	char *path = "/bin/";
 
 	(void)argc;
 	(void)env;
 
 	while (1)
 	{
-		signal(SIGINT, ctrlc);
 		write(1, "$ ", 2);
+
+		signal(SIGINT, ctrlc);
 
 		if (getline(&buffer, &bufsize, stdin) == -1)
 		{
-			perror("Error");
 			exit(EXIT_FAILURE);
 		}
+
+		write(1, "$ ", 2);
 
 		rm_last_char_if(buffer);
 
@@ -36,9 +37,9 @@ int main(int argc, char *argv[5],char *env[])
 
 /*		printf("%s argv[0], %s argv[1]", argv[0], argv[1]); test */
 
-		_strcpy(progpath, path);
-		_strcat(progpath, argv[0]);
-
+/*		_strcpy(progpath, path);*/
+		_strcpy(progpath, argv[0]);
+/*		printf("progpath before fork : %s\n", progpath);*/
 		id = fork();
 
 		if (id == 0)
@@ -49,7 +50,6 @@ int main(int argc, char *argv[5],char *env[])
  		else
  		{
  			wait(NULL);
- 			printf("Child exited\n");
  		}
 	}
 	free(buffer);
