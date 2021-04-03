@@ -27,7 +27,7 @@ void fill_argv(char *token, char *argv[])
 	argv[i] = NULL;
 }
 
-void *_getenv(char *var_env_name)
+char *_getenv(char *var_env_name)
 {
 	extern char **environ;
 	int i;
@@ -38,7 +38,7 @@ void *_getenv(char *var_env_name)
 			return (environ[i]);
 		i++;
 	}
-	return;
+	return(NULL);
 }
 
 void _execute(char *argv[])
@@ -59,6 +59,7 @@ void _execute(char *argv[])
 
 char *_which(char *command_name)
 {
+	char *absolute_path;
 	char *path;
 	char *list_path[20];
 	int i = 1;
@@ -84,12 +85,12 @@ char *_which(char *command_name)
 			list_path[i] = strtok(NULL, ":");
 		
 			jackline = _strlen(list_path[i]);
-			if (list_path[i][jackline] == '\0')
+			if (list_path[i][jackline - 1] != '/')
 			{
-				list_path[i][jackline] = '/';
-				list_path[i][jackline + 1] = '\0';
+				list_path[i] = str_concat(list_path[i], "/");
 			} 
-			if (stat(
+
+			if (stat( &structur
 				    return (
 
 	}
