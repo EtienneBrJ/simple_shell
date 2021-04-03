@@ -1,33 +1,5 @@
 #include "shell.h"
-#include <stdio.h>
-void rm_last_char_if(char *buffer)
-{
-	int length;
-
-	length = _strlen(buffer);
-
-	if ( buffer[length - 1] == '\n')
-	{
-		buffer[length - 1] = '\0';
-	}
-}
-
-
-void fill_argv(char *token, char *argv[])
-
-{
-	int i = 0;
-
-	while(token != NULL)
-	{
-		argv[i] = token;
-		token = strtok(NULL, " \n");
-		i++;
-	}
-	argv[i] = NULL;
-}
-
-
+#include <stdio.h> 
 char *_getenv(char *var_env_name)
 {
 	extern char **environ;
@@ -63,11 +35,12 @@ char *_which(char *command_name)
 {
 	char *absolute_path = "";
 	char *path;
-	char *list_path[20];
+	char *list_path[5];
 	int i = 1;
 	struct stat st;
 	extern char **environ;
 	int jackline;
+	char *delimiter = "=:";
 
 	if (command_name == NULL)
 		exit(EXIT_FAILURE);
@@ -80,12 +53,15 @@ char *_which(char *command_name)
 			perror("Invalid path");
 			return (NULL);
 		}
-		printf("path -> %s\n", path);
+		/*parseString(path, list_path, delimiter)*/
 
-		list_path[0] = strtok(path, "=:");
+		list_path[0] = strtok(path, delimiter);
+		list_path[1] = "";
+		printf("test : %s", list_path[0]);
 		while (list_path[i])
 		{
-			list_path[i] = strtok(NULL, "=:");
+			printf("PATH[1] %s", list_path[1]);
+			list_path[i] = strtok(NULL, delimiter);
 
 			jackline = _strlen(list_path[i]);
 			if (list_path[i][jackline - 1] != '/')
