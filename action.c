@@ -69,11 +69,8 @@ char *_which(char *command_name)
 			absolute_path = str_concat(absolute_path, command_name);
 
 			if (stat(absolute_path, &st) == 0)
-	
-		{
-	
-			return (absolute_path);
-			}
+				return (absolute_path);
+		
 			i++;
 		}
 	}
