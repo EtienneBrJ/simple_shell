@@ -32,6 +32,16 @@ void _execute(char *argv[])
 
 char *_which(char *command_name)
 {
+<<<<<<< HEAD
+	char *absolute_path = "";
+	char *path;
+	char *list_path[5];
+	int i = 1;
+	struct stat st;
+	extern char **environ;
+	int jackline;
+	char *delimiter = "=:";
+=======
 	char *absolute_path;
 	char *path;
 	char *list_path[10];
@@ -41,6 +51,7 @@ char *_which(char *command_name)
 	int size_str;
 	char *delimiter = "=:";
 	
+>>>>>>> 930745ea5b475bf6941d6ef15bae2250a2bdf3c0
 
 	if (command_name == NULL)
 		exit(EXIT_FAILURE);
@@ -53,6 +64,29 @@ char *_which(char *command_name)
 			perror("Invalid path");
 			return (NULL);
 		}
+<<<<<<< HEAD
+		/*parseString(path, list_path, delimiter)*/
+
+		list_path[0] = strtok(path, delimiter);
+		list_path[1] = "";
+		printf("test : %s", list_path[0]);
+		while (list_path[i])
+		{
+			printf("PATH[1] %s", list_path[1]);
+			list_path[i] = strtok(NULL, delimiter);
+
+			jackline = _strlen(list_path[i]);
+			if (list_path[i][jackline - 1] != '/')
+			{
+				list_path[i] = str_concat(list_path[i], "/");
+			}
+
+			str_concat(absolute_path, list_path[i]);
+			str_concat(absolute_path, command_name);
+
+			if (stat(absolute_path, &st) == 0)
+				return (absolute_path);
+=======
 
 		parseString(path, list_path, delimiter);
 
@@ -71,12 +105,19 @@ char *_which(char *command_name)
 			{
 				return (absolute_path);
 			}
+>>>>>>> 930745ea5b475bf6941d6ef15bae2250a2bdf3c0
 			i++;
 		}
 	}
 	else
+<<<<<<< HEAD
+		return (command_name);
+	return (NULL);
+}
+=======
 	{
 		 return (command_name);
 	}
 	return (NULL);
 }
+>>>>>>> 930745ea5b475bf6941d6ef15bae2250a2bdf3c0
