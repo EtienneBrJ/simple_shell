@@ -10,6 +10,8 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+extern char **environ;
+
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
 int _strlen(char *s);
@@ -22,5 +24,6 @@ char *str_concat(char *s1, char *s2);
 void _execute(char *argv[]);
 char *_getenv(char *var_env_name);
 void parseString(char *buffer, char *argv[], char *delim);
-
+char *_strncpy(char *dest, char *src, int n);
+int _strcmp(char *s1, char *s2);
 #endif
