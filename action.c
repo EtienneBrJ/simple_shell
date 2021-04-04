@@ -21,8 +21,10 @@ void _execute(char *argv[])
 
 	command_to_execute = _which(argv[0]);
 	if (command_to_execute != NULL)
+	{
 		argv[0] = command_to_execute;
-
+		free(command_to_execute);
+	}
 	pid = fork();
 	if (pid == 0)
 		if (execve(argv[0], argv, NULL) == -1)
