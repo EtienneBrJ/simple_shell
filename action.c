@@ -2,7 +2,6 @@
 #include <stdio.h>
 char *_getenv(char *var_env_name)
 {
-	extern char **environ;
 	int i = 0;
 
 	while (*environ[i])
@@ -16,24 +15,28 @@ char *_getenv(char *var_env_name)
 
 void _execute(char *argv[])
 {
+	int status;
 	pid_t pid;
 	char *command_to_execute;
+	
 	
 	command_to_execute = _which(argv[0]);
 	if (command_to_execute != NULL)
 		argv[0] = command_to_execute;
 
 	pid = fork();
+	
 	if (pid == -1)
 	{
 		perror("Error:");
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
+	{
 		execve(argv[0], argv, NULL);
-			
+	}	
 	else
-	wait(NULL);
+	waitpid(pid, &status, WUNTRACED);
 	
 }
 
@@ -44,7 +47,6 @@ char *_which(char *command_name)
 	char *list_path[10];
 	int i = 1;
 	struct stat st;
-	extern char **environ;
 	int size_str;
 	char *delimiter = "=:";
 	

@@ -1,15 +1,13 @@
 #include "shell.h"
 
-int main(int argc, char **argv,char **env)
+int main(void)
 {
 	char *buffer;
 	size_t bufsize;
 	ssize_t chars;
 	char *delim = " \n";
+	char *argv[5]; 
 	
-	(void)argc;
-	(void)env;
-
 	buffer = NULL;
 	bufsize = 0;
 	if (isatty(STDIN_FILENO))
@@ -29,17 +27,12 @@ int main(int argc, char **argv,char **env)
 
 		rm_last_char_if(buffer);
  
- 		if(strcmp(buffer, "exit") == 0)
+ 		if(_strcmp(buffer, "exit") == 0)
  		{
  			free(buffer);
 			exit(EXIT_SUCCESS);
  		}
-		else if (argv[0] == NULL)
-		{
-			free(buffer);
-			exit(EXIT_SUCCESS);
-		}
- 
+	 
 		parseString(buffer, argv, delim);
 
 		_execute(argv);
