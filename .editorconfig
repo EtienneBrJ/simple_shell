@@ -1,0 +1,9 @@
+root = true
+
+[*]
+charset = utf-8
+
+[*.{c,h}]
+insert_final_newline = true
+indent_style = tab
+indent_size = 8
