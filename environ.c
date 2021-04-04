@@ -33,12 +33,12 @@ char *_strdup(char *str)
  *@str: pointer to string to insert
  *Return: the adress of the new ellement or null if it failed
  */
-environment *add_node_end(environment **head, char *name, char *value)
+env_l *add_node_end(env_l **head, char *name, char *value)
 {
-	environment *new_node;
-	environment *tmp;
+    env_l *new_node;
+	env_l *tmp;
 
-	new_node = malloc(sizeof(environment));
+	new_node = malloc(sizeof(env_l));
 	if (new_node == NULL)
 		return (NULL);
 	new_node->name = _strdup(name);
@@ -74,11 +74,11 @@ int _strcmp(char *s1, char *s2)
 }
 
 
-environment *_parsingenv(char *env_name)
+env_l *_parsingenv(char *env_name)
 {
 	char *name, *token, *var_env;
     extern char **environ;
-    environment *env_list = NULL;
+    env_l *env_list = NULL;
     int i;
 
 	var_env = _getenv(env_name);
