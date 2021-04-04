@@ -1,5 +1,5 @@
 #include "shell.h"
-#include <stdio.h> 
+#include <stdio.h>
 char *_getenv(char *var_env_name)
 {
 	extern char **environ;
@@ -7,11 +7,11 @@ char *_getenv(char *var_env_name)
 
 	while (*environ[i])
 	{
-		if(_strstr(environ[i], var_env_name) != NULL)
+		if (_strstr(environ[i], var_env_name) != NULL)
 			return (environ[i]);
 		i++;
 	}
-	return(NULL);
+	return (NULL);
 }
 
 void _execute(char *argv[])
@@ -23,32 +23,60 @@ void _execute(char *argv[])
 	if (command_to_execute != NULL)
 		argv[0] = command_to_execute;
 
-
-        pid = fork();
+	pid = fork();
 	if (pid == 0)
 		if (execve(argv[0], argv, NULL) == -1)
 			perror("Error:");
 	wait(NULL);
 }
 
-void *_which(char *command_name)
+char *_which(char *command_name)
 {
-	char *env_name = "PATH";
+	char *absolute_path;
+	char *path;
+	char *list_path[10];
+	int i = 1;
 	struct stat st;
-	env_l *absolute_path;
+	extern char **environ;
+	int size_str;
+	char *delimiter = "=:";
+	
 
 	if (command_name == NULL)
 		exit(EXIT_FAILURE);
 
 	if (stat(command_name, &st) != 0)
 	{
-		absolute_path = _parsingenv(env_name);
-		if (stat(absolute_path, &st) == 0)
-			return (absolute_path);
+		path = _getenv("PATH");
+		if (path == NULL)
+		{
+			perror("Invalid path");
+			return (NULL);
+		}
+
+		parseString(path, list_path, delimiter);
+
+		while (list_path[i])
+		{
+			size_str = _strlen(list_path[i]);
+			if (list_path[i][size_str - 1] != '/')
+			{
+				list_path[i] = str_concat(list_path[i], "/");
+			}
+			absolute_path = "";
+			absolute_path = str_concat(absolute_path, list_path[i]);
+			absolute_path = str_concat(absolute_path, command_name);
+
+			if (stat(absolute_path, &st) == 0)
+			{
+				return (absolute_path);
+			}
+			i++;
+		}
 	}
 	else
-	 	return (command_name);
+	{
+		 return (command_name);
+	}
 	return (NULL);
 }
-
-
