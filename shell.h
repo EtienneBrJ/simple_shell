@@ -24,7 +24,7 @@ int _strlen(char *s);
 void fill_argv(char *token, char *argv[]);
 void rm_last_char_if(char *buffer);
 void ctrlc(int i);
-char *_which(char *command_name);
+void *_which(char *command_name);
 char *_strstr(char *haystack, char *needle);
 char *str_concat(char *s1, char *s2);
 void _execute(char *argv[]);
