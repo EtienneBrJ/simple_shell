@@ -21,9 +21,6 @@ char *_strstr(char *haystack, char *needle);
 char *str_concat(char *s1, char *s2);
 void _execute(char *argv[]);
 char *_getenv(char *var_env_name);
+void parseString(char *buffer, char *argv[], char *delim);
 
-char *_strdup(char *str);
-environment *add_node_end(environment **head, char *str, char *token);
-int _strcmp(char *s1, char *s2);
-environment _parsingenv(char *env_name)
 #endif
