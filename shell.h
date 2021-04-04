@@ -14,7 +14,7 @@ typedef struct environment
 {
 	char *name;
 	char *value;
-	environment *next;
+	env_l *next;
 } env_l;
 
 

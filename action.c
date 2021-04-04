@@ -35,7 +35,7 @@ void *_which(char *command_name)
 {
 	char *env_name = "PATH";
 	struct stat st;
-	environment *absolute_path;
+	env_l *absolute_path;
 
 	if (command_name == NULL)
 		exit(EXIT_FAILURE);
