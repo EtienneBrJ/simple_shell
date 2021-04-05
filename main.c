@@ -6,7 +6,7 @@ int main(void)
 	size_t bufsize;
 	ssize_t chars;
 	char *delim = " \n";
-	char *argv[5]; 
+	char **argv; 
 	
 	buffer = NULL;
 	bufsize = 0;
@@ -26,22 +26,25 @@ int main(void)
 		}
 
 		/*rm_last_char_if(buffer);*/
- 
+		
  		if(_strcmp(buffer, "exit") == 0)
  		{
-			/*free_double_ptr(argv);*/
 			free(buffer);
 			exit(EXIT_SUCCESS);
  		}
 		if(_strcmp(buffer, "env") == 0)
 		{
+			free(buffer);
+			free_double_ptr(argv);
 			print_environment(environ);
 		}
-	 
+	 	argv = malloc(8);
+		
 		parseString(buffer, argv, delim);
-
+		
 		_execute(argv);
-
+		
+		free(buffer);
 		buffer = NULL;
 		bufsize = 0;
 		if (isatty(STDIN_FILENO))

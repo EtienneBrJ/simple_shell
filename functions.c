@@ -18,7 +18,7 @@ void rm_last_char_if(char *buffer)
 	}
 }
 
-void parseString(char *buffer, char *argv[], char *delim)
+void parseString(char *buffer, char **argv, char *delim)
 
 {
 	int i = 0;

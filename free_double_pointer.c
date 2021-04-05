@@ -2,7 +2,7 @@
 
 void free_double_ptr(char **double_point)
 {
-	unsigned int i = 0;
+	int i = 0;
 
 	if (double_point == NULL)
 		return;
