@@ -44,7 +44,8 @@ char *_which(char *command_name)
 {
 
 	char *absolute_path;
-	char *path, *pathcp;
+	char *path;
+	char *pathcp;
 	char *list_path[10];
 	int i = 1;
 	struct stat st;
@@ -60,7 +61,7 @@ char *_which(char *command_name)
 	if (stat(command_name, &st) != 0)
 	{
 		path = _getenv("PATH");
-		
+		printf("%s\n",path);
 		if (path == NULL)
 		{
 			perror("Invalid path");
