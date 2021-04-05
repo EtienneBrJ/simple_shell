@@ -3,7 +3,7 @@
 char *_getenv(char *var_env_name)
 {
 	int i = 0;
-
+	
 	while (*environ[i])
 	{
 		if (_strstr(environ[i], var_env_name) != NULL)
@@ -43,13 +43,15 @@ void _execute(char *argv[])
 char *_which(char *command_name)
 {
 	char *absolute_path;
-	char *path;
+	char *path, *pathcp;
 	char *list_path[10];
 	int i = 1;
 	struct stat st;
 	int size_str;
 	char *delimiter = "=:";
-	
+	int length;
+
+
 
 	if (command_name == NULL)
 		exit(EXIT_FAILURE);
@@ -57,14 +59,18 @@ char *_which(char *command_name)
 	if (stat(command_name, &st) != 0)
 	{
 		path = _getenv("PATH");
-		printf("env %s\n", path);
+		
 		if (path == NULL)
 		{
 			perror("Invalid path");
 			return (NULL);
 		}
-
-		parseString(path, list_path, delimiter);
+		length = _strlen(path);
+		pathcp = malloc((sizeof(char) * length) + 1);
+		if(pathcp == NULL)
+			return(NULL);
+		_strncpy(pathcp, path, length);
+		parseString(pathcp, list_path, delimiter);
 
 		while (list_path[i])
 		{
@@ -79,9 +85,11 @@ char *_which(char *command_name)
 
 			if (stat(absolute_path, &st) == 0)
 			{
+				free(pathcp);
 				return (absolute_path);
 			}
 			i++;
+			
 		}
 	}
 	else
