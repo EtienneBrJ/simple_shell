@@ -25,14 +25,18 @@ int main(void)
 			exit(EXIT_SUCCESS);
 		}
 
-		rm_last_char_if(buffer);
+		/*rm_last_char_if(buffer);*/
  
  		if(_strcmp(buffer, "exit") == 0)
  		{
-			free_double_ptr(argv);
+			/*free_double_ptr(argv);*/
 			free(buffer);
 			exit(EXIT_SUCCESS);
  		}
+		if(_strcmp(buffer, "env") == 0)
+		{
+			print_environment(environ);
+		}
 	 
 		parseString(buffer, argv, delim);
 

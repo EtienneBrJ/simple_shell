@@ -27,4 +27,5 @@ void parseString(char *buffer, char *argv[], char *delim);
 char *_strncpy(char *dest, char *src, int n);
 int _strcmp(char *s1, char *s2);
 void free_double_ptr(char **double_point);
+void print_environment(char **environ);
 #endif

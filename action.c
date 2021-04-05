@@ -60,7 +60,7 @@ char *_which(char *command_name)
 	if (stat(command_name, &st) != 0)
 	{
 		path = _getenv("PATH");
-		printf("%s\n",path);
+		
 		if (path == NULL)
 		{
 			perror("Invalid path");
