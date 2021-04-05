@@ -22,14 +22,15 @@ int main(void)
 			if (isatty(STDIN_FILENO))
 				write(STDOUT_FILENO,"\n",1);
 			free(buffer);
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 
 		rm_last_char_if(buffer);
  
  		if(_strcmp(buffer, "exit") == 0)
  		{
- 			free(buffer);
+			free_double_ptr(argv);
+			free(buffer);
 			exit(EXIT_SUCCESS);
  		}
 	 
