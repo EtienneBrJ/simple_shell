@@ -29,13 +29,12 @@ void _execute(char **argv)
 	
 	if (pid == 0)
 	{
-		if (command_to_execute == NULL)
-		{
-			exit(EXIT_SUCCESS);
-		}
+		
 		if (execve(argv[0], argv, NULL) == -1)
-			perror(argv[0]);
-			exit(0);
+			{
+				perror(argv[0]);
+				exit(0);
+			}
 	}	
 
 	else
