@@ -38,9 +38,9 @@ int main(void)
 			free(buffer);
 			/*free_double_ptr(argv);*/
 			print_environment(environ);
-		}
-	
-	 	argv = malloc(8);
+		}	
+		
+	 	argv = malloc(sizeof(_strlen(buffer)));
 		if (argv == NULL)
 			exit(EXIT_FAILURE);
 		
@@ -48,7 +48,7 @@ int main(void)
 		if (argv[0] == NULL)
 			continue;
 		else	
-		_execute(argv);
-	}
+			_execute(argv);
+		}
 	return(0);
 }		

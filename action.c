@@ -33,13 +33,17 @@ void _execute(char **argv)
 		if (execve(argv[0], argv, NULL) == -1)
 			{
 				perror(argv[0]);
+				free(command_to_execute);
+				free_double_ptr(argv);
 				exit(0);
 			}
 	}	
 
 	else
 		wait(&status);
-	free(argv);
+	free(command_to_execute);
+	
+		
 }
 
 char *_which(char *command_name)
@@ -96,13 +100,16 @@ char *_which(char *command_name)
 					
 			if (stat(absolute_path, &st) == 0)
 			{
+				
 				return (absolute_path);
 			}
 			i++;
-		
+
 		
 		}
-	}
+		free_double_ptr(list_path);
+		free(pathcp);
+	}	
 	else
 	{
 		 return (command_name);
