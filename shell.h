@@ -26,4 +26,9 @@ char *_getenv(char *var_env_name);
 void parseString(char *buffer, char *argv[], char *delim);
 char *_strncpy(char *dest, char *src, int n);
 int _strcmp(char *s1, char *s2);
+<<<<<<< HEAD
+=======
+void free_double_ptr(char **double_point);
+void print_environment(char **environ);
+>>>>>>> fe94cf9b4d25929ee79853f4d8d99c15dd0ee90d
 #endif
