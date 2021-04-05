@@ -42,6 +42,7 @@ void _execute(char *argv[])
 
 char *_which(char *command_name)
 {
+
 	char *absolute_path;
 	char *path, *pathcp;
 	char *list_path[10];
@@ -84,10 +85,11 @@ char *_which(char *command_name)
 			absolute_path = str_concat(absolute_path, command_name);
 
 			if (stat(absolute_path, &st) == 0)
+
 			{
 				free(pathcp);
 				return (absolute_path);
-			}
+      }
 			i++;
 			
 		}
