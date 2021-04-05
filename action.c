@@ -92,7 +92,8 @@ char *_which(char *command_name)
 				return (absolute_path);
       }
 			i++;
-			
+		
+		free(absolute_path);	
 		}
 	}
 	else
