@@ -3,7 +3,7 @@
 void ctrlc(int i)
 {
 	i = i;
-	write(1, "\n$ ", 3);
+	write(STDOUT_FILENO, "\n$ ", 3);
 }
 
 void rm_last_char_if(char *buffer)

@@ -1,5 +1,27 @@
 #include "shell.h"
 /**
+ *_strncpy - copy the string pointed by src
+ *@src: source
+ *@dest: destination
+ *@n: int
+ *Return: the pointer to the dest
+ */
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i;
+
+	for (i = 0 ; i < n && src[i] != '\0' ; i++)
+	{
+		dest[i] = src[i];
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
+}
+/**
  * *_strcpy - copy the string pointed by src
  *@src: source to copy
  *@dest: char pointer
@@ -132,3 +154,21 @@ char *str_concat(char *s1, char *s2)
 	dest[s1len + s2len] = '\0';
 	return (dest);
 }
+/**
+ *_strcmp - compare two string
+ *@s1: string
+ *@s2: string
+ *Return: 0 if same return else
+ */
+int _strcmp(char *s1, char *s2)
+{
+	int i;
+
+	for (i = 0 ; s1[i] != '\0' && s2[i] != '\0' ; i++)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+	}
+	return (0);
+}
+
