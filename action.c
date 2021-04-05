@@ -13,7 +13,7 @@ char *_getenv(char *var_env_name)
 	return (NULL);
 }
 
-void _execute(char *argv[])
+void _execute(char **argv)
 {
 	int status;
 	pid_t pid;
@@ -24,20 +24,23 @@ void _execute(char *argv[])
 	if (command_to_execute != NULL)
 		argv[0] = command_to_execute;
 
+
 	pid = fork();
 	
-	if (pid == -1)
-	{
-		perror("Error:");
-		exit(EXIT_FAILURE);
-	}
 	if (pid == 0)
 	{
-		execve(argv[0], argv, NULL);
+		if (command_to_execute == NULL)
+		{
+			exit(EXIT_SUCCESS);
+		}
+		if (execve(argv[0], argv, NULL) == -1)
+			perror(argv[0]);
+			exit(0);
 	}	
+
 	else
-	waitpid(pid, &status, WUNTRACED);
-	
+		wait(&status);
+	free(argv);
 }
 
 char *_which(char *command_name)
@@ -45,18 +48,19 @@ char *_which(char *command_name)
 	char *absolute_path;
 	char *path;
 	char *pathcp;
-	char *list_path[10];
+	char **list_path;
 	int i = 1;
 	struct stat st;
 	int size_str;
 	char *delimiter = "=:";
-	int length;
+	int length = 0;
 
 
 
 	if (command_name == NULL)
-		exit(EXIT_FAILURE);
-
+	{
+		return (NULL);
+	}
 	if (stat(command_name, &st) != 0)
 	{
 		path = _getenv("PATH");
@@ -67,10 +71,16 @@ char *_which(char *command_name)
 			return (NULL);
 		}
 		length = _strlen(path);
+
 		pathcp = malloc((sizeof(char) * length) + 1);
 		if(pathcp == NULL)
 			return(NULL);
+
 		_strncpy(pathcp, path, length);
+
+		list_path = malloc(sizeof(char) * length);
+		if (list_path == NULL)
+			return(NULL);
 		parseString(pathcp, list_path, delimiter);
 
 		while (list_path[i])
@@ -83,15 +93,15 @@ char *_which(char *command_name)
 			absolute_path = "";
 			absolute_path = str_concat(absolute_path, list_path[i]);
 			absolute_path = str_concat(absolute_path, command_name);
-
+			
+					
 			if (stat(absolute_path, &st) == 0)
 			{
-				free(pathcp);
 				return (absolute_path);
 			}
 			i++;
 		
-		free(absolute_path);	
+		
 		}
 	}
 	else
