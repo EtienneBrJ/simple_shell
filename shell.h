@@ -28,4 +28,11 @@ char *_strncpy(char *dest, char *src, int n);
 int _strcmp(char *s1, char *s2);
 void free_double_ptr(char **double_point);
 void print_environment(char **environ);
+
+/* Factorisation _which de base*/
+char *mallocNstrncpy(char *pathcp, char *path);
+char **mallocNparse(char *pathcp, char **list_path, char *delimiter);
+void *_calloc(unsigned int nmemb, unsigned int size);
+char *put_in_Form(char **list_path, char *command_name, int index);
+
 #endif
