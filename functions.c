@@ -12,7 +12,7 @@ void rm_last_char_if(char *buffer)
 
 	length = _strlen(buffer);
 
-	if ( buffer[length - 1] == '\n')
+	if (buffer[length - 1] == '\n')
 	{
 		buffer[length - 1] = '\0';
 	}
@@ -22,11 +22,11 @@ void parseString(char *buffer, char **argv, char *delim)
 
 {
 	int i = 0;
-    char *token;
+	char *token;
 
-    token = strtok(buffer, delim);
+	token = strtok(buffer, delim);
 
-	while(token != NULL)
+	while (token != NULL)
 	{
 		argv[i] = token;
 		token = strtok(NULL, delim);
