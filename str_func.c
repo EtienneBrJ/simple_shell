@@ -10,7 +10,7 @@ char *_strncpy(char *dest, char *src, int n)
 {
 	int i;
 
-	for (i = 0 ; i < n && src[i] != '\0' ; i++)
+	for (i = 0; i < n && src[i] != '\0'; i++)
 	{
 		dest[i] = src[i];
 	}
@@ -31,7 +31,7 @@ char *_strcpy(char *dest, char *src)
 {
 	int i;
 
-	for (i = 0 ; src[i] != 0 ; i++)
+	for (i = 0; src[i] != 0; i++)
 	{
 		dest[i] = src[i];
 	}
@@ -47,15 +47,15 @@ char *_strcpy(char *dest, char *src)
  */
 char *_strcat(char *dest, char *src)
 {
-	int char_end_src;/*array nuber with value '\0' in src*/
+	int char_end_src; /*array nuber with value '\0' in src*/
 	int i;
-/*loocking for '\0' in dst*/
+	/*loocking for '\0' in dst*/
 	{
-		for (i = 0 ; dest[i] != '\0' ; i++)
+		for (i = 0; dest[i] != '\0'; i++)
 		{
 		}
-		for (char_end_src = 0 ; src[char_end_src] != '\0' ; char_end_src++)
-/*add add src to dest*/
+		for (char_end_src = 0; src[char_end_src] != '\0'; char_end_src++)
+		/*add add src to dest*/
 		{
 			dest[i + char_end_src] = src[char_end_src];
 		}
@@ -123,7 +123,7 @@ char *str_concat(char *s1, char *s2)
 	int i;
 	char *dest;
 
-	if  (s1 != NULL)
+	if (s1 != NULL)
 	{
 		while (s1[s1len] != '\0')
 		{
@@ -164,11 +164,10 @@ int _strcmp(char *s1, char *s2)
 {
 	int i;
 
-	for (i = 0 ; s1[i] != '\0' && s2[i] != '\0' ; i++)
+	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; i++)
 	{
 		if (s1[i] != s2[i])
 			return (s1[i] - s2[i]);
 	}
 	return (0);
 }
-
