@@ -15,9 +15,12 @@ char *_getenv(char *var_env_name)
 
 void _execute(char **argv)
 {
+
 	int status;
 	pid_t pid;
 	char *command_to_execute;
+
+	(void)argv;
 
 	command_to_execute = _which(argv[0]);
 	if (command_to_execute != NULL)
@@ -27,22 +30,15 @@ void _execute(char **argv)
 
 	if (pid == 0)
 	{
-
-		if (command_to_execute == NULL)
-		{
-			exit(EXIT_SUCCESS);
-		}
 		if (execve(argv[0], argv, NULL) == -1)
 		{
 
 			perror(argv[0]);
-			free(command_to_execute);
-			/*free_double_ptr(argv);*/
-			exit(0);
 		}
+		exit(0);
 	}
 
 	else
 		wait(&status);
-	/*free(command_to_execute);*/
+	free(command_to_execute);
 }

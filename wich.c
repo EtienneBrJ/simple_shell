@@ -21,15 +21,18 @@ char *_which(char *command_name)
 		}
 		pathcp = mallocNstrncpy(pathcp, path); 
         list_path = mallocNparse(pathcp, list_path, delimiter);
-
+		free(pathcp);
 		while (list_path[i])
 		{
 			absolute_path = put_in_Form(list_path, command_name, i);
 			if (stat(absolute_path, &st) == 0)
+			{
+				free_double_ptr(list_path);
 				return (absolute_path);
+			}
 			i++;
 		}
-			
+		free_double_ptr(list_path);
 	}
 	else
 	{
