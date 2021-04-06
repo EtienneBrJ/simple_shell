@@ -38,7 +38,7 @@ int main(void)
 			free_double_ptr(argv);
 			print_environment(environ);
 		}
-	 	argv = malloc(8);
+	 	argv = _calloc(8, sizeof(char));
 		
 		parseString(buffer, argv, delim);
 		
