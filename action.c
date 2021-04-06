@@ -31,7 +31,7 @@ void _execute(char **argv)
 		if (execve(argv[0], argv, NULL) == -1)
 		{
 			perror(argv[0]);
-			free(command_to_execute);
+			/*free(command_to_execute);*/
 			/*free_double_ptr(argv);*/
 			exit(0);
 		}
@@ -47,7 +47,7 @@ char *_which(char *command_name)
 	char *absolute_path;
 	char *path;
 	char *pathcp;
-	char **list_path;
+	char *list_path[10];
 	int i = 1;
 	struct stat st;
 	int size_str;
@@ -75,7 +75,7 @@ char *_which(char *command_name)
 
 		_strncpy(pathcp, path, length);
 
-		list_path = malloc(sizeof(char) * length);
+	/*	list_path = malloc(sizeof(char) * length);*/
 		if (list_path == NULL)
 			return (NULL);
 		parseString(pathcp, list_path, delimiter);
@@ -93,12 +93,13 @@ char *_which(char *command_name)
 
 			if (stat(absolute_path, &st) == 0)
 			{
-
+				
 				return (absolute_path);
 			}
 			i++;
 		}
-		free_double_ptr(list_path);
+		
+		/*free_double_ptr(list_path);*/
 		free(pathcp);
 	}
 	else

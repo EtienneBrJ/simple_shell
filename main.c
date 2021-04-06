@@ -5,7 +5,7 @@ int main(void)
 	char *buffer;
 	size_t bufsize;
 	char *delim = " \n\t\r\f\v";
-	char **argv;
+	char *argv[10];
 	int prompt = 1;
 
 	buffer = NULL;
@@ -24,14 +24,14 @@ int main(void)
 		{
 			if (isatty(STDIN_FILENO))
 				write(STDOUT_FILENO, "\n", 1);
-			free(buffer);
+			/*free(buffer);*/
 			exit(EXIT_SUCCESS);
 		}
 		/*rm_last_char_if(buffer);*/
 
 		if (_strcmp(buffer, "exit") == 0)
 		{
-			free(buffer);
+			/*free(buffer);*/
 			exit(EXIT_SUCCESS);
 		}
 		if (_strcmp(buffer, "env") == 0)
@@ -41,7 +41,7 @@ int main(void)
 			print_environment(environ);
 		}
 
-		argv = malloc(sizeof(_strlen(buffer)));
+		/*argv = malloc(sizeof(_strlen(buffer)));*/
 		if (argv == NULL)
 			exit(EXIT_FAILURE);
 
