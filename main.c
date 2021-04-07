@@ -27,7 +27,6 @@ int main(void)
 			break;
 		}
 		/*rm_last_char_if(buffer);*/
-		
  		if(_strcmp(buffer, "exit") == 0)
  		{
 			 
@@ -40,6 +39,7 @@ int main(void)
 		}
 	 	/*argv = _calloc(50, sizeof(char));*/
 	    parseString(buffer, argv, delim);
+
 		if (argv[0] == NULL)
 			continue;
 		else
@@ -59,8 +59,8 @@ void _execute(char **argv)
 	pid_t pid;
 	char *command_to_execute;
 
-	(void)argv;
-
+	if (argv == NULL || argv[0] == NULL)
+		return;
 
 	command_to_execute = _which(argv[0]);
 	if (command_to_execute != NULL)
@@ -74,7 +74,7 @@ void _execute(char **argv)
 		{
 			perror(argv[0]);
 		}
-		/*free(argv); avec ca : 2 allocs, 2 free*/
+		free(argv[0]); 
 		exit(0);
 
 	}
@@ -82,7 +82,7 @@ void _execute(char **argv)
 	else
 	{
 		wait(&status);
-	/*	free(argv);*/
+		/*free(command_to_execute);*/
 	}
 }
 

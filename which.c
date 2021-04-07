@@ -28,12 +28,10 @@ char *_which(char *command_name)
 			absolute_path = put_in_Form(list_path, command_name, i);
 			if (stat(absolute_path, &st) == 0)
 			{
-				/*free_double_ptr(list_path);*/
 				return (absolute_path);
 			}
 			i++;
 		}
-	/*	free_double_ptr(list_path);*/
 	}
 	else
 	{
@@ -111,7 +109,7 @@ char *_getenv(char *var_env_name)
 
 	while (*environ[i])
 	{
-		if (_strstr(environ[i], var_env_name) != NULL)
+		if (_strstr(environ[i], var_env_name) != NULL && environ[i][0] == var_env_name[0])
 			return (environ[i]);
 		i++;
 	}
