@@ -13,8 +13,8 @@ void free_double_ptr(char **double_point)
 		++i;
 	}
 
-	if (double_point[i] == NULL)
-		free(double_point[i]);
+	/*if (double_point[i] == NULL)
+		free(double_point[i]);*/
 
 	free(double_point);
 }

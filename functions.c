@@ -27,6 +27,9 @@ void parseString(char *buffer, char **argv, char *delim)
 
     token = strtok(buffer, delim);
 
+	if (token == NULL)
+		return;
+
 	while(token != NULL)
 	{
 		argv[i] = token;
@@ -34,5 +37,5 @@ void parseString(char *buffer, char **argv, char *delim)
 		i++;
 	}
 	argv[i] = NULL; 
-
+	free(token);
 }

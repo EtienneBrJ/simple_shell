@@ -1,12 +1,12 @@
 #include "shell.h"
-#include <stdio.h>
+
 char *_getenv(char *var_env_name)
 {
 	int i = 0;
 
 	while (*environ[i])
 	{
-		if (_strstr(environ[i], var_env_name) != NULL)
+		if (_strstr(environ[i], var_env_name) != NULL && environ[i][0] == var_env_name[0])
 			return (environ[i]);
 		i++;
 	}
@@ -20,7 +20,8 @@ void _execute(char **argv)
 	pid_t pid;
 	char *command_to_execute;
 
-	(void)argv;
+	if (argv == NULL || argv[0] == NULL)
+		return;
 
 	command_to_execute = _which(argv[0]);
 	if (command_to_execute != NULL)
@@ -32,7 +33,6 @@ void _execute(char **argv)
 	{
 		if (execve(argv[0], argv, NULL) == -1)
 		{
-
 			perror(argv[0]);
 		}
 		exit(0);

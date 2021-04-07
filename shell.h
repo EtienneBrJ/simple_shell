@@ -31,7 +31,7 @@ void print_environment(char **environ);
 
 /* Factorisation _which de base*/
 char *mallocNstrncpy(char *pathcp, char *path);
-char **mallocNparse(char *pathcp, char **list_path, char *delimiter);
+char **mallocNparse(char *pathcp, char *delimiter);
 void *_calloc(unsigned int nmemb, unsigned int size);
 char *put_in_Form(char **list_path, char *command_name, int index);
 
