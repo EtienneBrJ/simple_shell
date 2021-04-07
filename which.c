@@ -28,14 +28,16 @@ char *_which(char *command_name)
 			absolute_path = put_in_Form(list_path, command_name, i);
 			if (stat(absolute_path, &st) == 0)
 			{
+				free(pathcp);
+				free(list_path);
 				return (absolute_path);
 			}
 			i++;
 		}
-	}
+	}	
 	else
 	{
-		 return (command_name);
+		return (command_name);
 	}
 	return (NULL);
 }
@@ -75,7 +77,7 @@ char *put_in_Form(char **list_path, char *command_name, int index)
 			absolute_path = str_concat(absolute_path, list_path[index]);
 			absolute_path = str_concat(absolute_path, command_name);
 			
-						
+			free(list_path[index]);			
 			return (absolute_path);
 }
 

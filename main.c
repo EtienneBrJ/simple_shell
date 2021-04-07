@@ -66,6 +66,7 @@ void _execute(char **argv)
 	if (command_to_execute != NULL)
 		argv[0] = command_to_execute;
 
+
 	pid = fork();
 
 	if (pid == 0)
@@ -74,7 +75,7 @@ void _execute(char **argv)
 		{
 			perror(argv[0]);
 		}
-		free(argv[0]); 
+		free(argv[0]);
 		exit(0);
 
 	}
@@ -83,6 +84,7 @@ void _execute(char **argv)
 	{
 		wait(&status);
 		/*free(command_to_execute);*/
+		
 	}
 }
 

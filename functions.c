@@ -20,7 +20,7 @@ void parseString(char *buffer, char *argv[10], char *delim)
 		i++;
 	}
 	argv[i] = NULL;
-	free(token); 
+	
 
 }
 
