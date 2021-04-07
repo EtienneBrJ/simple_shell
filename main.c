@@ -24,28 +24,22 @@ int main(void)
 		{
 			if (isatty(STDIN_FILENO))
 				write(STDOUT_FILENO, "\n", 1);
-			/*free(buffer);*/
 			break;
 		}
 		/*rm_last_char_if(buffer);*/
 		
  		if(_strcmp(buffer, "exit") == 0)
  		{
-			 break;
-			/*free(buffer);*/
-			/*exit(EXIT_SUCCESS);*/
+			 
+			free(buffer);
+			exit(EXIT_SUCCESS);
  		}
 		if(_strcmp(buffer, "env") == 0)
 		{
-			/*free(buffer);*/
-			/*free_double_ptr(argv);*/
 			print_environment(environ);
 		}
-	 	/*argv = _calloc(8, sizeof(char));*/
-		if (argv == NULL)
-			break;
-
-		parseString(buffer, argv, delim);
+	 	/*argv = _calloc(50, sizeof(char));*/
+	    parseString(buffer, argv, delim);
 		if (argv[0] == NULL)
 			continue;
 		else
@@ -56,5 +50,39 @@ int main(void)
 	}
 	free(buffer);
 	return (0);
+}
+
+void _execute(char **argv)
+{
+
+	int status;
+	pid_t pid;
+	char *command_to_execute;
+
+	(void)argv;
+
+
+	command_to_execute = _which(argv[0]);
+	if (command_to_execute != NULL)
+		argv[0] = command_to_execute;
+
+	pid = fork();
+
+	if (pid == 0)
+	{
+		if (execve(argv[0], argv, NULL) == -1)
+		{
+			perror(argv[0]);
+		}
+		/*free(argv); avec ca : 2 allocs, 2 free*/
+		exit(0);
+
+	}
+
+	else
+	{
+		wait(&status);
+	/*	free(argv);*/
+	}
 }
 
