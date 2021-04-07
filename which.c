@@ -3,8 +3,9 @@
 char *_which(char *command_name)
 {
 
-	char *absolute_path = "", *path, *pathcp = "", *delimiter = "=:";
+	char *absolute_path = "", *pathcp = "", *delimiter = "=:";
     char **list_path = NULL;
+	char *path;
 	struct stat st;
 	int i = 0;
 	
@@ -21,15 +22,18 @@ char *_which(char *command_name)
 		}
 		pathcp = mallocNstrncpy(pathcp, path); 
         list_path = mallocNparse(pathcp, list_path, delimiter);
-
+		
 		while (list_path[i])
 		{
 			absolute_path = put_in_Form(list_path, command_name, i);
 			if (stat(absolute_path, &st) == 0)
+			{
+				/*free_double_ptr(list_path);*/
 				return (absolute_path);
+			}
 			i++;
 		}
-			
+	/*	free_double_ptr(list_path);*/
 	}
 	else
 	{
@@ -44,7 +48,7 @@ char *mallocNstrncpy(char *pathcp, char *path)
     int n;
 
     n = _strlen(path);
-    pathcp = _calloc(n, sizeof(char));
+    pathcp = _calloc(n + 1, sizeof(char));
     _strncpy(pathcp, path, n);
 	return(pathcp);
 }
@@ -54,7 +58,7 @@ char **mallocNparse(char *pathcp, char **list_path, char *delimiter)
     int n;
 
     n = _strlen(pathcp);
-    list_path = _calloc(n, sizeof(char));
+    list_path = _calloc(n + 1, sizeof(char));
 	parseString(pathcp, list_path, delimiter);
 	return (list_path);
 }
@@ -99,4 +103,17 @@ void *_calloc(unsigned int nmemb, unsigned int size)
 	for (i = 0; i < (nmemb * size); i++)
 		s[i] = 0;
 	return (s);
+}
+
+char *_getenv(char *var_env_name)
+{
+	int i = 0;
+
+	while (*environ[i])
+	{
+		if (_strstr(environ[i], var_env_name) != NULL)
+			return (environ[i]);
+		i++;
+	}
+	return (NULL);
 }

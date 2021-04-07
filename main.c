@@ -4,60 +4,85 @@ int main(void)
 {
 	char *buffer;
 	size_t bufsize;
-	ssize_t chars;
-	char *delim = " \n";
-	char **argv; 
-	
+	char *delim = " \n\t\r\f\v";
+	char *argv[10]; 
+	int prompt = 1;
+
 	buffer = NULL;
 	bufsize = 0;
-	if (isatty(STDIN_FILENO))
+	
+	while (prompt)
+	{
+		if (isatty(STDIN_FILENO))
 		{
 			write(STDOUT_FILENO, "$ ", 2);
 		}
+
 		signal(SIGINT, ctrlc);
-	while ((chars = getline(&buffer, &bufsize, stdin)))
-	{
-		if (chars == EOF)
+
+		if (getline(&buffer, &bufsize, stdin) == EOF)
 		{
 			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO,"\n",1);
-			free(buffer);
-			exit(EXIT_SUCCESS);
+				write(STDOUT_FILENO, "\n", 1);
+			break;
 		}
-
 		/*rm_last_char_if(buffer);*/
 		
  		if(_strcmp(buffer, "exit") == 0)
  		{
+			 
 			free(buffer);
 			exit(EXIT_SUCCESS);
  		}
 		if(_strcmp(buffer, "env") == 0)
 		{
-			free(buffer);
-			free_double_ptr(argv);
 			print_environment(environ);
 		}
-	 	argv = _calloc(8, sizeof(char));
+	 	/*argv = _calloc(50, sizeof(char));*/
+	    parseString(buffer, argv, delim);
+		if (argv[0] == NULL)
+			continue;
+		else
+			_execute(argv);
 		
-		parseString(buffer, argv, delim);
-		
-		_execute(argv);
-		
-		free(buffer);
-		buffer = NULL;
-		bufsize = 0;
-		if (isatty(STDIN_FILENO))
-		{
-			write(STDOUT_FILENO, "$ ", 2);
-		}
 		
 
 	}
-	if (chars == -1)
+	free(buffer);
+	return (0);
+}
+
+void _execute(char **argv)
+{
+
+	int status;
+	pid_t pid;
+	char *command_to_execute;
+
+	(void)argv;
+
+
+	command_to_execute = _which(argv[0]);
+	if (command_to_execute != NULL)
+		argv[0] = command_to_execute;
+
+	pid = fork();
+
+	if (pid == 0)
 	{
-		return (EXIT_FAILURE);
+		if (execve(argv[0], argv, NULL) == -1)
+		{
+			perror(argv[0]);
+		}
+		/*free(argv); avec ca : 2 allocs, 2 free*/
+		exit(0);
+
 	}
-	return (EXIT_SUCCESS);
+
+	else
+	{
+		wait(&status);
+	/*	free(argv);*/
+	}
 }
 
