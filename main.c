@@ -26,7 +26,7 @@ int main(void)
 				write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
-		/*rm_last_char_if(buffer);*/
+		/*rm_last_char_if(buffer);  ca fou la merde*/
  		if(_strcmp(buffer, "exit") == 0)
  		{
 			 
