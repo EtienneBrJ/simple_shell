@@ -21,6 +21,6 @@ After cloning the repository, you can compile with the following command:
 
       gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 
-![Alt Text](https://media.giphy.com/media/QHMBdlY5IM6CKkiZuT/giphy.gif | width=500)
+![Alt Text](https://media.giphy.com/media/NNvtDRZNqvPnBYtte1/giphy.gif)
 
 # in collaboration with [Simon](https://github.com/SimonBr017 "GitHub") for Holberton projects.
