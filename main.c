@@ -29,11 +29,16 @@ int main(void)
 			free(buffer);
 			break;
 		}
+		
 		argv = fill_argv(buffer);
 
 		if (argv == NULL)
+		{
+			free(argv);
+			free(buffer);
 			continue;
-
+		}
+		
 		if (_strcmp("exit", argv[0]) == 0)
 			close_shell(argv, buffer);
 	
@@ -79,13 +84,12 @@ void path_tester(char **argv, char *buffer)
 		i++;
 	}
     /* si on arrive ici c'est que lac commande existe pas*/
-	/*il faudra voir pour print error comme /bin/sh*/
-
-	write(STDERR_FILENO, ":-( command: not found\n", 24);
-
+	
+	perror(argv[0]);
 
 	free(buffer);
 	free_double_ptr(argv);
+	
 	free_double_ptr(directories);
 	exit(EXIT_SUCCESS);
 }

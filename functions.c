@@ -12,12 +12,14 @@ char **fill_argv(char *buffer) /* remplit argv avec les commandes passées dans 
 	/*remplace \n mis par getline par null*/
 	buffer[_strlen(buffer) - 1] = '\0'; 
     taille = count_word(buffer);
-	/*if (taille == 0)
-		return (NULL);   ???*/
-    conteneur = malloc((taille + 1) * sizeof(char));
+	if (taille == 0 )
+		return (NULL);
+			
+    conteneur = malloc((taille + 1) * sizeof(char*));
 	if (!conteneur)
 		return (NULL);
-
+	
+	
 	token = strtok(buffer, delim);
 	while (token)
 	{
@@ -31,6 +33,7 @@ char **fill_argv(char *buffer) /* remplit argv avec les commandes passées dans 
 		token = strtok(NULL, delim);
 		i++;
 	}
+	
 	conteneur[i] = NULL;
 	return (conteneur);
 }
@@ -46,7 +49,7 @@ char **fill_directories(char *firstCommand)
 
 	path = _getenv("PATH");
 	nb_dir = count_directories(path);
-	directories = malloc(sizeof(char *) * (nb_dir + 1));
+	directories = malloc((sizeof(char*)) * (nb_dir + 2));
 	if (directories == NULL)
 		return (NULL);
 		
@@ -56,7 +59,7 @@ char **fill_directories(char *firstCommand)
 	{
 		dir_length = _strlen(dir);
 		command_length = _strlen(firstCommand);
-		directories[i] = malloc(sizeof(char *) * (dir_length + command_length + 2));
+		directories[i] = malloc(sizeof(char*) * (dir_length + command_length + 2));
 		if (directories[i] == NULL)
 		{
 			free_double_ptr(directories);
@@ -67,9 +70,7 @@ char **fill_directories(char *firstCommand)
 			i++;
 		dir = strtok(NULL, ":");
 	}
-
-		directories[i] = NULL;
-
+	directories[i] = NULL;
 	return (directories);
 }
 
