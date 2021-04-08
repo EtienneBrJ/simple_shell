@@ -1,6 +1,6 @@
 #include "shell.h"
 
-int count_word(char *buffer)
+int count_word(char *buffer)  /* on compte les mots pour pouvoir malloc argv bien*/
 {
 	int i = 0, nb_mot = 0;
 
@@ -15,7 +15,7 @@ int count_word(char *buffer)
 
 }
 
-int count_directories(char *path)
+int count_directories(char *path) /* on compte les directories pour pouvoir malloc directories correctement*/
 {
 	int i;
 	int nb_dir = 0;

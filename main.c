@@ -2,12 +2,11 @@
 
 int main(void)
 {
-	char *buffer;
+	char *buffer, **argv;
 	size_t bufsize;
-	char **argv; 
-	int prompt = 1;
-	int status;
-	pid_t pid;
+	pid_t pid; 
+	int prompt = 1, status;
+	
 	buffer = NULL;
 	bufsize = 0;
 	
@@ -55,22 +54,15 @@ int main(void)
 	return (EXIT_SUCCESS);	
 }		
 
-void _execute(char **argv, __attribute__((unused))char *buffer)
+void _execute(char **argv, char *buffer)
 {
 	struct stat st;
 
-   /* printf("%s : dans execute\n", argv[0]);
-	if (argv == NULL)
-		argv_null(buffer);
-
-	
-	
-	else */
 	if (stat(argv[0], &st) == 0)
 		execve(argv[0], argv, NULL);
 	
 	else
-		path_tester(argv, buffer); /* comme _which */
+		path_tester(argv, buffer); /* va tester les path pour savoir si une commande existe */
 }
 
 void path_tester(char **argv, char *buffer)
@@ -86,8 +78,8 @@ void path_tester(char **argv, char *buffer)
 			execve(directories[i], argv, NULL);
 		i++;
 	}
-
-	/*commande pas trouvée: print error il faudra revoir*/
+    /* si on arrive ici c'est que lac commande existe pas*/
+	/*il faudra voir pour print error comme /bin/sh*/
 
 	write(STDERR_FILENO, ":-( command: not found\n", 24);
 
