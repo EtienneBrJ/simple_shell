@@ -26,8 +26,10 @@ int main(void)
 				write(STDOUT_FILENO, "\n", 1);
 			free(buffer);
 			break;
-		} 	
+		}
+
 	    argv = fill_argv(buffer);
+
 		pid = fork();
 
 	    if (pid == 0)
