@@ -1,9 +1,8 @@
 #include "shell.h"
 #include <stdio.h>
 
-char **fill_argv(char *buffer)
-
-{
+char **fill_argv(char *buffer) /* remplit argv avec les commandes passées dans le buffer*/
+{                              /*ex : argv[0] = ls, argv[1] = -l, argv[2] = /tmp .. */
 	char *delim = " \n\t\r\f\v";
 	char **conteneur;
 	char *token;
@@ -37,8 +36,10 @@ char **fill_argv(char *buffer)
 }
 
 		
-char **fill_directories(char *firstCommand)
-{
+char **fill_directories(char *firstCommand) 
+/* remplit directories avec les différents chemin du PATH qu'on doit tester*/
+/*ex : directories[0] = /usr/bin, argv[1] = /usr/sbin, argv[2] = /usr/games .. */
+{ 
 	char **directories, *path, *dir;
 	int nb_dir, i = 0;
 	int dir_length, command_length;
@@ -72,9 +73,9 @@ char **fill_directories(char *firstCommand)
 	return (directories);
 }
 
-char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n)
-{
-	int i, j;
+char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n) 
+/* mets dans fullpath : le directory, le slash et la commande pour pouvoir tester stat */
+{	int i, j;
 
 	for (i = 0; dir[i] != '\0' && i < l; i++)
 		fullpath[i] = dir[i];
@@ -88,11 +89,6 @@ char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n)
 
 	return (fullpath);
 }
-
-
-
-
-
 
 /**
  *_strncpy - copy the string pointed by src
