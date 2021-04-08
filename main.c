@@ -87,12 +87,11 @@ void path_tester(char **argv, char *buffer)
 
 	write(STDERR_FILENO, ":-( command: not found\n", 24);
 
+
 	free(buffer);
 	free_double_ptr(argv);
 	free_double_ptr(directories);
 	exit(EXIT_SUCCESS);
 }
-
-
 
 
