@@ -3,7 +3,7 @@
 **Duration of the project: 14 days in duo.**
 **Compile with Weverything**
 
-This project closes the first quarter spent at Holberton, and allows us to apply all the concepts we have seen in the last two months.
+This project closes the first trimester of the year spent at Holberton, and allows us to apply all the concepts we have seen so far.
 
 The shell is a program that receives commands given by a user from his keyboard and sends them to the operating system, which will then execute them.
 
