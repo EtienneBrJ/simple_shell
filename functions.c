@@ -1,80 +1,228 @@
 #include "shell.h"
 #include <stdio.h>
 
-
-void parseString(char *buffer, char *argv[10], char *delim)
+char **fill_argv(char *buffer)
 
 {
+	char *delim = " \n\t\r\f\v";
+	char **conteneur;
+	char *token;
+	int taille;
 	int i = 0;
-    char *token;
+	
+	/*remplace \n mis par getline par null*/
+	buffer[_strlen(buffer) - 1] = '\0'; 
+    taille = count_word(buffer);
+	/*if (taille == 0)
+		return (NULL);   ???*/
+    conteneur = malloc((taille + 1) * sizeof(char));
+	if (!conteneur)
+		return (NULL);
 
-    token = strtok(buffer, delim);
-
-	/*if (token == NULL)
-	return (NULL);*/
-
-	while(token != NULL)
+	token = strtok(buffer, delim);
+	while (token)
 	{
-		argv[i] = token;
+		conteneur[i] = malloc((_strlen(token) + 1 ) * sizeof(char));
+		if (!conteneur[i])
+		{
+			free_double_ptr(conteneur);
+			return (NULL);
+		}
+		_strncpy(conteneur[i], token, _strlen(token) + 1);
 		token = strtok(NULL, delim);
 		i++;
 	}
-	argv[i] = NULL;
-	
-
+	conteneur[i] = NULL;
+	return (conteneur);
 }
 
-void ctrlc(int i)
+		
+char **fill_directories(char *firstCommand)
 {
-	i = i;
-	write(1, "\n$ ", 3);
-}
+	char **directories, *path, *dir;
+	int nb_dir, i = 0;
+	int dir_length, command_length;
 
+	path = _getenv("PATH");
+	nb_dir = count_directories(path);
+	directories = malloc(sizeof(char *) * (nb_dir + 1));
+	if (directories == NULL)
+		return (NULL);
+		
+	dir = strtok(path, "=");
 
-void rm_last_char_if(char *buffer)
-{
-	int length;
-
-	length = _strlen(buffer);
-
-	if ( buffer[length - 1] == '\n')
+	while (dir != NULL)
 	{
-		buffer[length - 1] = '\0';
+		dir_length = _strlen(dir);
+		command_length = _strlen(firstCommand);
+		directories[i] = malloc(sizeof(char *) * (dir_length + command_length + 2));
+		if (directories[i] == NULL)
+		{
+			free_double_ptr(directories);
+			return (NULL);
+		}
+			strcpfullPath(directories[i], dir, firstCommand,
+			dir_length, command_length);
+			i++;
+		dir = strtok(NULL, ":");
 	}
+
+		directories[i] = NULL;
+
+	return (directories);
 }
 
-
-void print_environment(char **environ)
+char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n)
 {
-    int i, length;
+	int i, j;
 
-    i = 0;
+	for (i = 0; dir[i] != '\0' && i < l; i++)
+		fullpath[i] = dir[i];
+	
+	fullpath[i] = '/';
+	i++;
 
-    while (environ[i])
-    {
-        length = _strlen(environ[i]);
+	for (j = 0; command[j] != '\0' && j < n; i++, j++)
+		fullpath[i] = command[j];
+	fullpath[i] = '\0';
 
-        write(STDOUT_FILENO, environ[i], length);
-        write(STDOUT_FILENO, "\n", 1);
-        i++;
-    }
+	return (fullpath);
 }
 
-void free_double_ptr(char **double_point)
+
+
+
+
+
+/**
+ *_strncpy - copy the string pointed by src
+ *@src: source
+ *@dest: destination
+ *@n: int
+ *Return: the pointer to the dest
+ */
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i;
+
+	for (i = 0; i < n && src[i] != '\0'; i++)
+	{
+		dest[i] = src[i];
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
+}
+
+/**
+ *_strlen - returns the length of a string
+ *@s: string
+ *Return: the length of a string
+ */
+int _strlen(char *s)
 {
 	int i = 0;
 
-	if (double_point == NULL)
-		return;
-
-	while (double_point[i])
+	while (s[i] != '\0')
 	{
-		free(double_point[i]);
-		++i;
+		i++;
+	}
+	return (i);
+}
+
+/**
+ * *_strstr - find the first occurence of a substring
+ *@haystack: string
+ *@needle: string
+ *Return: NULL or the begining of the located substring
+ */
+char *_strstr(char *haystack, char *needle)
+{
+	int i = 0;
+	int j;
+
+	if (needle[0] == '\0')
+	{
+		return (haystack + i);
+	}
+	while (haystack[i] != '\0')
+	{
+		j = 0;
+
+		while (needle[j] == haystack[i + j])
+		{
+			j++;
+			if (needle[j] == '\0')
+			{
+				return (haystack + i);
+			}
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+/**
+ * *str_concat - concatenates two strings
+ *@s1: string
+ *@s2: string
+ *Return: null on failure, pointer to dest
+ */
+char *str_concat(char *s1, char *s2)
+{
+	int s1len = 0;
+	int s2len = 0;
+	int i;
+	char *dest;
+
+	if (s1 != NULL)
+	{
+		while (s1[s1len] != '\0')
+		{
+			s1len++;
+		}
+	}
+	if (s2 != NULL)
+	{
+		while (s2[s2len] != '\0')
+		{
+			s2len++;
+		}
+	}
+	dest = malloc((s1len + s2len + 1) * sizeof(char));
+	if (dest == NULL)
+	{
+		return (NULL);
 	}
 
-	/*if (double_point[i] == NULL)
-		free(double_point[i]);*/
+	for (i = 0; i < s1len; i++)
+	{
+		dest[i] = s1[i];
+	}
+	for (i = 0; i < s2len; i++)
+	{
+		dest[i + s1len] = s2[i];
+	}
+	dest[s1len + s2len] = '\0';
+	return (dest);
+}
+/**
+ *_strcmp - compare two string
+ *@s1: string
+ *@s2: string
+ *Return: 0 if same return else
+ */
+int _strcmp(char *s1, char *s2)
+{
+	int i;
 
-	free(double_point);
+	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; i++)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+	}
+	return (0);
 }

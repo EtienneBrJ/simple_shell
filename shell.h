@@ -12,27 +12,27 @@
 
 extern char **environ;
 
-char *_strcpy(char *dest, char *src);
-char *_strcat(char *dest, char *src);
-int _strlen(char *s);
-
-void rm_last_char_if(char *buffer);
 void ctrlc(int i);
-char *_which(char *command_name);
-char *_strstr(char *haystack, char *needle);
-char *str_concat(char *s1, char *s2);
-void _execute(char **argv);
-char *_getenv(char *var_env_name);
-void parseString(char *buffer, char **argv, char *delim);
-char *_strncpy(char *dest, char *src, int n);
-int _strcmp(char *s1, char *s2);
-void free_double_ptr(char **double_point);
-void print_environment(char **environ);
+void close_shell(char **argv, char *buffer);
+void argv_null(char *buffer);
 
-/* Factorisation _which de base*/
-char *mallocNstrncpy(char *pathcp, char *path);
-char **mallocNparse(char *pathcp, char **list_path, char *delimiter);
-void *_calloc(unsigned int nmemb, unsigned int size);
-char *put_in_Form(char **list_path, char *command_name, int index);
+int _strlen(char *s);
+int _strcmp(char *s1, char *s2);
+char *_strncpy(char *dest, char *src, int n);
+char *_strstr(char *haystack, char *needle);
+
+char *_getenv(char *var_env_name);
+void print_environment(char **environ);
+void free_double_ptr(char **double_point);
+void _execute(char **argv, char *buffer);
+void path_tester(char **argv, char *buffer);
+
+int count_word(char *buffer);
+int count_directories(char *path);
+
+char **fill_argv(char *buffer);
+char **fill_directories(char *firstCommand);
+
+char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n);
 
 #endif

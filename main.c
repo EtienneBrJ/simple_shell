@@ -4,10 +4,10 @@ int main(void)
 {
 	char *buffer;
 	size_t bufsize;
-	char *delim = " \n\t\r\f\v";
-	char *argv[10]; 
+	char **argv; 
 	int prompt = 1;
-
+	int status;
+	pid_t pid;
 	buffer = NULL;
 	bufsize = 0;
 	
@@ -24,67 +24,73 @@ int main(void)
 		{
 			if (isatty(STDIN_FILENO))
 				write(STDOUT_FILENO, "\n", 1);
-			break;
-		}
-		/*rm_last_char_if(buffer);  ca fou la merde*/
- 		if(_strcmp(buffer, "exit") == 0)
- 		{
-			 
 			free(buffer);
-			exit(EXIT_SUCCESS);
- 		}
-		if(_strcmp(buffer, "env") == 0)
-		{
-			print_environment(environ);
-		}
-	 	/*argv = _calloc(50, sizeof(char));*/
-	    parseString(buffer, argv, delim);
+			break;
+		} 	
+	    argv = fill_argv(buffer);
+		pid = fork();
 
-		if (argv[0] == NULL)
-			continue;
+	    if (pid == 0)
+			_execute(argv, buffer);	
 		else
-			_execute(argv);
-		
-		
-
-	}
-	free(buffer);
-	return (0);
-}
-
-void _execute(char **argv)
-{
-
-	int status;
-	pid_t pid;
-	char *command_to_execute;
-
-	if (argv == NULL || argv[0] == NULL)
-		return;
-
-	command_to_execute = _which(argv[0]);
-	if (command_to_execute != NULL)
-		argv[0] = command_to_execute;
-
-
-	pid = fork();
-
-	if (pid == 0)
-	{
-		if (execve(argv[0], argv, NULL) == -1)
 		{
-			perror(argv[0]);
+			wait(&status);
+			free(buffer);
+			free_double_ptr(argv);
 		}
-		free(argv[0]);
-		exit(0);
-
-	}
-
-	else
-	{
-		wait(&status);
-		/*free(command_to_execute);*/
+		buffer = NULL;
+		bufsize = 0;
 		
-	}
+    }
+	return (EXIT_SUCCESS);	
+}		
+
+void _execute(char **argv, __attribute__((unused))char *buffer)
+{
+	struct stat st;
+
+   /* printf("%s : dans execute\n", argv[0]);
+	if (argv == NULL)
+		argv_null(buffer);
+
+	else if (_strcmp("exit", argv[0]))
+		close_shell(argv, buffer);
+	
+	else if (_strcmp("env", argv[0]))
+		print_environment(environ);
+	
+	else */
+	if (stat(argv[0], &st) == 0)
+		execve(argv[0], argv, NULL);
+	
+	else
+		path_tester(argv, buffer); /* comme _which */
 }
+
+void path_tester(char **argv, char *buffer)
+{
+	char **directories;
+	struct stat st2;
+	int i = 0;
+
+	directories = fill_directories(argv[0]);
+	while (directories[i])
+	{
+		if (stat(directories[i], &st2) == 0)
+			execve(directories[i], argv, NULL);
+		i++;
+	}
+
+	/*commande pas trouvée: print error il faudra revoir*/
+
+	write(STDERR_FILENO, ":-( command: not found\n", 24);
+
+	free(buffer);
+	free_double_ptr(argv);
+	free_double_ptr(directories);
+	exit(EXIT_SUCCESS);
+}
+
+
+
 
