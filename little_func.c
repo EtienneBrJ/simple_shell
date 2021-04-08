@@ -11,7 +11,6 @@ int count_word(char *buffer)  /* on compte les mots pour pouvoir malloc argv bie
 				nb_mot++;
 		i++;
 	}
-	printf("nb mot: %d\n",nb_mot);
 	return (nb_mot);
 
 }
@@ -25,7 +24,7 @@ int count_directories(char *path) /* on compte les directories pour pouvoir mall
 		if ((path[i] != ':' && path[i + 1] == ':')
 		|| (path[i] != ':' && path[i + 1] == '\0'))
 				nb_dir++;
-	printf("nb dir:%d\n",nb_dir);
+	
 	return (nb_dir);
 }
 
