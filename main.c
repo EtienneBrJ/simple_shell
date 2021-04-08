@@ -13,6 +13,9 @@ int main(void)
 	
 	while (prompt)
 	{
+		buffer = NULL;
+		bufsize = 0;
+
 		if (isatty(STDIN_FILENO))
 		{
 			write(STDOUT_FILENO, "$ ", 2);
@@ -27,9 +30,17 @@ int main(void)
 			free(buffer);
 			break;
 		}
+		argv = fill_argv(buffer);
 
-	    argv = fill_argv(buffer);
+		if (argv == NULL)
+			continue;
 
+		if (_strcmp("exit", argv[0]) == 0)
+			close_shell(argv, buffer);
+	
+		if (_strcmp("env", argv[0]) == 0)
+			print_environment(environ);
+	    
 		pid = fork();
 
 	    if (pid == 0)
@@ -40,10 +51,7 @@ int main(void)
 			free(buffer);
 			free_double_ptr(argv);
 		}
-		buffer = NULL;
-		bufsize = 0;
-		
-    }
+	}
 	return (EXIT_SUCCESS);	
 }		
 
@@ -55,11 +63,7 @@ void _execute(char **argv, __attribute__((unused))char *buffer)
 	if (argv == NULL)
 		argv_null(buffer);
 
-	else if (_strcmp("exit", argv[0]))
-		close_shell(argv, buffer);
 	
-	else if (_strcmp("env", argv[0]))
-		print_environment(environ);
 	
 	else */
 	if (stat(argv[0], &st) == 0)
