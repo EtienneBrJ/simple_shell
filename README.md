@@ -23,4 +23,4 @@ After cloning the repository, you can compile with the following command:
 
 ![Alt Text](https://media.giphy.com/media/NNvtDRZNqvPnBYtte1/giphy.gif)
 
-# in collaboration with [Simon](https://github.com/SimonBr017 "GitHub") for Holberton projects.
+in collaboration with [Simon](https://github.com/SimonBr017 "GitHub") for Holberton projects.
