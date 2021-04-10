@@ -3,17 +3,17 @@
 int main(void)
 {
 	char *buffer, **argv;
-	size_t bufsize;
+	
 	pid_t pid; 
 	int prompt = 1, status;
 	
-	buffer = NULL;
-	bufsize = 0;
+	/*buffer = NULL;*/
+	
 	
 	while (prompt)
 	{
-		buffer = NULL;
-		bufsize = 0;
+		/*buffer = NULL;*/
+		
 
 		if (isatty(STDIN_FILENO))
 		{
@@ -21,14 +21,9 @@ int main(void)
 		}
 
 		signal(SIGINT, ctrlc);
+		buffer = malloc(sizeof(char) * 256);
+		_getline(buffer);
 
-		if (getline(&buffer, &bufsize, stdin) == EOF)
-		{
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 1);
-			free(buffer);
-			break;
-		}
 		argv = fill_argv(buffer);
 
 		if (argv == NULL)
@@ -43,7 +38,7 @@ int main(void)
 		pid = fork();
 
 	    if (pid == 0)
-			_execute(argv, buffer);	
+			path_tester(argv, buffer);	
 		else
 		{
 			wait(&status);
@@ -54,19 +49,10 @@ int main(void)
 	return (EXIT_SUCCESS);	
 }		
 
-void _execute(char **argv, char *buffer)
-{
-	struct stat st;
-
-	if (stat(argv[0], &st) == 0)
-		execve(argv[0], argv, NULL);
-	
-	else
-		path_tester(argv, buffer); /* va tester les path pour savoir si une commande existe */
-}
 
 void path_tester(char **argv, char *buffer)
 {
+	struct stat st;
 	char **directories;
 	struct stat st2;
 	int i = 0;
@@ -78,10 +64,12 @@ void path_tester(char **argv, char *buffer)
 			execve(directories[i], argv, NULL);
 		i++;
 	}
+	if (stat(argv[0], &st) == 0)
+		execve(argv[0], argv, NULL);
     /* si on arrive ici c'est que lac commande existe pas*/
 	/*il faudra voir pour print error comme /bin/sh*/
 
-	write(STDERR_FILENO, ":-( command: not found\n", 24);
+	perror(argv[0]);
 
 
 	free(buffer);
