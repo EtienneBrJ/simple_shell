@@ -5,9 +5,6 @@
 int main(void)
 {
 	char *buffer, **argv;
-	char *getdir, *dir, *to; 
-	char buf[BUF_SIZE];
-
 	size_t bufsize;
 	pid_t pid; 
 	int prompt = 1, status;
@@ -22,9 +19,7 @@ int main(void)
 		bufsize = 0;
 
 		if (isatty(STDIN_FILENO))
-		{
 			write(STDOUT_FILENO, "$ ", 2);
-		}
 
 		signal(SIGINT, ctrlc);
 
@@ -48,11 +43,9 @@ int main(void)
 
 		if (_strcmp("cd", argv[0]) == 0)
 		{
-			getdir = getcwd(buf, sizeof(buf));
-			dir = strcat(getdir, "/");
-			to = strcat(dir, argv[1]);
-
-			chdir(to);
+			change_dir(argv);
+			free_double_ptr(argv);
+			free(buffer);
 			continue;
 		}
 	    
@@ -90,6 +83,8 @@ void path_tester(char **argv, char *buffer)
 	if (stat(argv[0], &st) == 0)
 		execve(argv[0], argv, NULL);
 
+
+			/* a voir */
 	if (_strcmp(argv[0], "^C") == 0)
 		{
 			free(buffer);

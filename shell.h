@@ -35,4 +35,6 @@ char **fill_directories(char *firstCommand);
 
 char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n);
 
+int change_dir(char **argv);
+
 #endif
