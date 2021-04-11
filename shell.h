@@ -34,5 +34,5 @@ char **fill_argv(char *buffer);
 char **fill_directories(char *firstCommand);
 
 char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n);
-
+char *_getline(char *buffer);
 #endif

@@ -9,9 +9,9 @@ char **fill_argv(char *buffer) /* remplit argv avec les commandes passées dans 
 	int taille;
 	int i = 0;
 	
-	/*remplace \n mis par getline par null*/
-	buffer[_strlen(buffer) - 1] = '\0'; 
-    taille = count_word(buffer);
+	
+	buffer[_strlen(buffer) - 1] = '\0';
+	taille = count_word(buffer);
 	if (taille == 0 )
 		return (NULL);
 			
@@ -35,6 +35,7 @@ char **fill_argv(char *buffer) /* remplit argv avec les commandes passées dans 
 	}
 	
 	conteneur[i] = NULL;
+	
 	return (conteneur);
 }
 

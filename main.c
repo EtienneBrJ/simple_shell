@@ -1,25 +1,22 @@
 #include "shell.h"
 
-#define BUF_SIZE 1024
+
 
 int main(void)
 {
 	char *buffer, **argv;
-	char *getdir, *dir, *to; 
-	char buf[BUF_SIZE];
 
-	size_t bufsize;
 	pid_t pid; 
 	int prompt = 1, status;
 
 	
-	buffer = NULL;
-	bufsize = 0;
+	/*buffer = NULL;*/
+	
 	
 	while (prompt)
 	{
-		buffer = NULL;
-		bufsize = 0;
+		/*buffer = NULL;*/
+		
 
 		if (isatty(STDIN_FILENO))
 		{
@@ -27,14 +24,9 @@ int main(void)
 		}
 
 		signal(SIGINT, ctrlc);
+		buffer = malloc(sizeof(char) * 256);
+		_getline(buffer);
 
-		if (getline(&buffer, &bufsize, stdin) == EOF)
-		{
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 1);
-			free(buffer);
-			break;
-		}
 		argv = fill_argv(buffer);
 
 		if (argv == NULL)
@@ -84,22 +76,12 @@ void path_tester(char **argv, char *buffer)
 			execve(directories[i], argv, NULL);
 		i++;
 	}
+	if (stat(argv[0], &st) == 0)
+		execve(argv[0], argv, NULL);
     /* si on arrive ici c'est que lac commande existe pas*/
 	/*il faudra voir pour print error comme /bin/sh*/
 
-	if (stat(argv[0], &st) == 0)
-		execve(argv[0], argv, NULL);
-
-	if (_strcmp(argv[0], "^C") == 0)
-		{
-			free(buffer);
-			free_double_ptr(argv);
-			free_double_ptr(directories);
-			exit(EXIT_SUCCESS);
-		}
-
-	write(STDERR_FILENO, ":-( command: not found\n", 24);
-
+	perror(argv[0]);
 
 	free(buffer);
 	free_double_ptr(argv);
