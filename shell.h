@@ -23,8 +23,7 @@ char *_strstr(char *haystack, char *needle);
 
 char *_getenv(char *var_env_name);
 void print_environment(char **environ);
-void free_double_ptr(char **double_point);
-void _execute(char **argv, char *buffer);
+
 void path_tester(char **argv, char *buffer);
 
 int count_word(char *buffer);
@@ -34,11 +33,12 @@ char **fill_argv(char *buffer);
 char **fill_directories(char *firstCommand);
 
 char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n);
-<<<<<<< HEAD
 
 int change_dir(char **argv);
 
-=======
 char *_getline(char *buffer);
->>>>>>> cd4d3793b8a843057711c2fa6c153afbb437907c
+
+void *_calloc(unsigned int nmemb, unsigned int size);
+void *_recalloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void free_double_ptr(char **double_point);
 #endif

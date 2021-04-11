@@ -4,14 +4,14 @@ char *_getline(char *buffer)
 {
     int rd;
     char c;
-    
     int i = 0;
-
-    
+      
     c = '\0';
 
     while (c != '\n' && c != EOF)
     {
+        
+        
         rd = read(STDIN_FILENO, &c, 1);
         if (rd == 0)
         {
@@ -20,9 +20,11 @@ char *_getline(char *buffer)
             free(buffer);
             exit(EXIT_SUCCESS);
         }
-        buffer[i] = c;
+        buffer[i] = c;        
         i++;
     }
-
+    printf("%d <-- count\n", i);
     return(buffer);
 }
+
+
