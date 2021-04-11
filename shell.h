@@ -34,7 +34,11 @@ char **fill_argv(char *buffer);
 char **fill_directories(char *firstCommand);
 
 char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n);
+<<<<<<< HEAD
 
 int change_dir(char **argv);
 
+=======
+char *_getline(char *buffer);
+>>>>>>> cd4d3793b8a843057711c2fa6c153afbb437907c
 #endif
