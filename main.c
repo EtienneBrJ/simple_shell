@@ -1,11 +1,14 @@
 #include "shell.h"
 
+
+
 int main(void)
 {
 	char *buffer, **argv;
-	
+
 	pid_t pid; 
 	int prompt = 1, status;
+
 	
 	/*buffer = NULL;*/
 	
@@ -34,6 +37,16 @@ int main(void)
 	
 		if (_strcmp("env", argv[0]) == 0)
 			print_environment(environ);
+
+		if (_strcmp("cd", argv[0]) == 0)
+		{
+			getdir = getcwd(buf, sizeof(buf));
+			dir = strcat(getdir, "/");
+			to = strcat(dir, argv[1]);
+
+			chdir(to);
+			continue;
+		}
 	    
 		pid = fork();
 
@@ -54,13 +67,12 @@ void path_tester(char **argv, char *buffer)
 {
 	struct stat st;
 	char **directories;
-	struct stat st2;
 	int i = 0;
 
 	directories = fill_directories(argv[0]);
 	while (directories[i])
 	{
-		if (stat(directories[i], &st2) == 0)
+		if (stat(directories[i], &st) == 0)
 			execve(directories[i], argv, NULL);
 		i++;
 	}
@@ -70,7 +82,6 @@ void path_tester(char **argv, char *buffer)
 	/*il faudra voir pour print error comme /bin/sh*/
 
 	perror(argv[0]);
-
 
 	free(buffer);
 	free_double_ptr(argv);
