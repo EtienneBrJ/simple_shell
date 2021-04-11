@@ -5,7 +5,11 @@
 int main(void)
 {
 	char *buffer, **argv;
+<<<<<<< HEAD
+	size_t bufsize;
+=======
 
+>>>>>>> cd4d3793b8a843057711c2fa6c153afbb437907c
 	pid_t pid; 
 	int prompt = 1, status;
 
@@ -19,9 +23,7 @@ int main(void)
 		
 
 		if (isatty(STDIN_FILENO))
-		{
 			write(STDOUT_FILENO, "$ ", 2);
-		}
 
 		signal(SIGINT, ctrlc);
 		buffer = malloc(sizeof(char) * 256);
@@ -40,11 +42,9 @@ int main(void)
 
 		if (_strcmp("cd", argv[0]) == 0)
 		{
-			getdir = getcwd(buf, sizeof(buf));
-			dir = strcat(getdir, "/");
-			to = strcat(dir, argv[1]);
-
-			chdir(to);
+			change_dir(argv);
+			free_double_ptr(argv);
+			free(buffer);
 			continue;
 		}
 	    
@@ -81,7 +81,22 @@ void path_tester(char **argv, char *buffer)
     /* si on arrive ici c'est que lac commande existe pas*/
 	/*il faudra voir pour print error comme /bin/sh*/
 
+<<<<<<< HEAD
+
+			/* a voir */
+	if (_strcmp(argv[0], "^C") == 0)
+		{
+			free(buffer);
+			free_double_ptr(argv);
+			free_double_ptr(directories);
+			exit(EXIT_SUCCESS);
+		}
+
+	write(STDERR_FILENO, ":-( command: not found\n", 24);
+
+=======
 	perror(argv[0]);
+>>>>>>> cd4d3793b8a843057711c2fa6c153afbb437907c
 
 	free(buffer);
 	free_double_ptr(argv);
