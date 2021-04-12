@@ -15,6 +15,27 @@
 
 extern char **environ;
 
+/**
+ * struct listint_s - singly linked list
+ * @n: integer
+ * @next: points to the next node
+ *
+ * Description: singly linked list node structure
+ * for Holberton project
+ */
+typedef struct list_s
+{
+	char *str;
+	struct list_s *next;
+} list_t;
+
+
+/* linked list for env */
+list_t *add_node_end(list_t **head, char *str);
+size_t print_list(list_t *h);
+void free_list(list_t *head);
+list_t *init_list_env(list_t *h);
+
 /* main func */
 void print_prompt();
 void _execute(char *buffer, char **argv);

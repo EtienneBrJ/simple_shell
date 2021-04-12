@@ -31,18 +31,15 @@ void print_environment(char **environ)
 
 void set_env(char *buffer, char **argv)
 {
-    
     int i = 0;
     if (argv[1] ==  NULL)
     {
-        printf("test");
         free_all(buffer, argv);
     }
     else if (argv[1] && argv[2])
         {
             puts("too many arguments");
-            free_all(buffer, argv);
-            
+            free_all(buffer, argv);           
         }
     else
     {
@@ -62,3 +59,5 @@ void set_env(char *buffer, char **argv)
     int i = 0;
 }
 */
+
+

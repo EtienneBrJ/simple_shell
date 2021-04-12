@@ -2,7 +2,12 @@
 int main(void)
 {
 	char *buffer, **argv;
+	struct list_t;
+    list_t *head;
+	head = NULL;
 
+	head = init_list_env(head);
+	
 	while (PROMPT)
 	{
 		/*buffer = malloc(sizeof(char) * (BUF_SIZE + 1));*/
@@ -23,11 +28,11 @@ int main(void)
 		{
 			set_env(buffer, argv);
 			/*free_all(buffer, argv);*/
-
 			continue;
 		}
 		if (_strcmp("env", argv[0]) == 0)
-			print_environment(environ);
+			print_list(head);
+
 		if (_strcmp("exit", argv[0]) == 0)
 			close_shell(argv, buffer);
 		
