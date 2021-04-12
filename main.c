@@ -1,5 +1,4 @@
 #include "shell.h"
-
 int main(void)
 {
 	char *buffer, **argv;
@@ -10,7 +9,7 @@ int main(void)
 
 		signal(SIGINT, ctrlc);
 
-		buffer = _calloc(BUF_SIZE, sizeof(char));
+		buffer = malloc(BUF_SIZE * sizeof(char));
 
 		_getline(buffer);
 
