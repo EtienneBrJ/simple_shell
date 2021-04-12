@@ -29,6 +29,7 @@ char *_getline()
     }
     buffer[i] = '\0';
 
+
     return (buffer);
 }
 
@@ -88,12 +89,10 @@ void close_shell(char **argv, char *buffer)
         free_all(buffer, argv);
         exit (EXIT_FAILURE);
     }
-    if (_isnumber(argv[1])) /*on doit créer une fonction qui check si c'est un numberen prenant en compte + et - (on va devoir utiliser _isdigit qu'on a deja fait) */	                        
+    if (_isnumber(argv[1]))                
     {
         n = _atoi(argv[1]);
         free_all(buffer, argv);
         exit (n);
     }
-	free_all(buffer, argv);
-	exit (EXIT_SUCCESS);
 }

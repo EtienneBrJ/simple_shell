@@ -1,5 +1,4 @@
 #include "shell.h"
-
 int main(void)
 {
 	char *buffer, **argv;
@@ -10,7 +9,6 @@ int main(void)
 		print_prompt();
 
 		signal(SIGINT, ctrlc);
-
 		
 		buffer = _getline();
 
