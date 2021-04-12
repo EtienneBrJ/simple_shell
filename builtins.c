@@ -1,28 +1,35 @@
 #include "shell.h"
 
-char *_getline(char *buffer)
+char *_getline()
 {
-    int rd;
-    char c;
-    int i = 0;
-      
-    c = '\0';
+    char c = '\0', *buffer;
+    int i = 0, rd, bufferSize = BUF_SIZE;
+
+    buffer = malloc(sizeof(char) * BUF_SIZE + 1);
 
     while (c != '\n' && c != EOF)
-    { 
+    {
         rd = read(STDIN_FILENO, &c, 1);
+
         if (rd == 0)
         {
-            if (isatty(STDIN_FILENO))
-                write(STDIN_FILENO, "\n", 1);
+            c = EOF;
+            write(STDIN_FILENO, "\n", 1);
             free(buffer);
             exit(EXIT_SUCCESS);
         }
-        buffer[i] = c;        
+
+        if (i >= bufferSize - 1)
+        {
+            buffer = _realloc(buffer, bufferSize, sizeof(char) * (i + 2));
+            bufferSize = i + 2;
+        }
+        buffer[i] = c;
         i++;
     }
-   /* printf("%d <-- count\n", i);*/
-    return(buffer);
+    buffer[i] = '\0';
+
+    return (buffer);
 }
 
 
@@ -70,6 +77,11 @@ int change_dir(char **argv)
 void close_shell(char **argv, char *buffer)
 {
     int n = 0;
+    if (argv[1] == NULL)
+    {
+        free_all(buffer, argv);
+        exit (EXIT_SUCCESS);
+    }
     if (argv[1] && argv[2])
     {
         _puts("too many arguments");
@@ -84,66 +96,4 @@ void close_shell(char **argv, char *buffer)
     }
 	free_all(buffer, argv);
 	exit (EXIT_SUCCESS);
-}
-
-/**  _atoi d'Octave du printf, peut etre des modifs a faire
- * _atoi - convert a string to an integer
- * @s: a pointer
- *
- * Return: an integer
- */
-int _atoi(char *s)
-{
-	int ite1 = 0, ite2, num = 0, sign = 1;
-
-	while (s[ite1] != '\0' && (s[ite1] < '0' || s[ite1] > '9'))
-	{
-		if (s[ite1] == '-')
-		{
-			sign *= -1;
-		}
-		ite1++;
-	}
-	ite2 = ite1;
-    while (s[ite2] >= '0' && s[ite2] <= '9')
-	{
-		num = (num * 10) + (s[ite2] - '0') * sign;
-		ite2++;
-	}
-	return (num);
-}
-
-/**
- * _isnumber - check for numbers in string
- * @s: string to check 
- * Return: 1 or 0
- */
-int _isnumber(char *s)
-{
-	int i;
-
-	for (i = 0; s[i]; i++)
-	{
-        if (s[i] == ' ' || s[i] == '-' || s[i] == '+')
-            i++;
-		while (s[i])
-        {
-            if (!_isdigit(s[i]))
-			    return (EXIT_FAILURE);
-        }
-	}
-	return (EXIT_SUCCESS);
-}
-
-/**
- * _isdigit - check if digit
- * @c: digit to check
- * Return: 1 or 0
- */
-int _isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (EXIT_SUCCESS);
-	else
-		return (EXIT_FAILURE);
 }
