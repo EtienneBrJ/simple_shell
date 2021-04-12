@@ -1,32 +1,20 @@
 #include "shell.h"
 
-
-
 int main(void)
 {
 	char *buffer, **argv;
-	pid_t pid; 
-    int status, prompt;
 
-	prompt = 1;
-
-	/*buffer = NULL;*/
-	
-	
-	while (prompt)
+	while (PROMPT)
 	{
-		/*buffer = NULL;*/
-		
-
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "$ ", 2);
+		print_prompt();
 
 		signal(SIGINT, ctrlc);
-		buffer = _calloc(2048, sizeof(char));
+
+		buffer = _calloc(BUF_SIZE, sizeof(char));
+
 		_getline(buffer);
 
 		argv = fill_argv(buffer);
-
 		if (argv == NULL)
         {
             free(buffer);
@@ -34,7 +22,7 @@ int main(void)
         }
 		if (_strcmp("exit", argv[0]) == 0)
 			close_shell(argv, buffer);
-	
+
 		if (_strcmp("env", argv[0]) == 0)
 			print_environment(environ);
 
@@ -45,9 +33,23 @@ int main(void)
 			free(buffer);
 			continue;
 		}
-	    
-		pid = fork();
+		_execute(buffer, argv);
+	}
+	return (EXIT_SUCCESS);	
+}		
 
+void _execute(char *buffer, char **argv)
+{
+    int status;
+
+    pid_t pid = 0;
+
+    pid = fork();
+		if (pid == -1)
+            {
+                perror("Error: fork() return -1");
+                exit (EXIT_FAILURE);
+            }
 	    if (pid == 0)
 			path_tester(argv, buffer);	
 		else
@@ -56,10 +58,7 @@ int main(void)
 			free(buffer);
 			free_double_ptr(argv);
 		}
-	}
-	return (EXIT_SUCCESS);	
-}		
-
+}
 
 void path_tester(char **argv, char *buffer)
 {
@@ -85,4 +84,10 @@ void path_tester(char **argv, char *buffer)
 	free_double_ptr(argv);
 	free_double_ptr(directories);
 	exit(EXIT_SUCCESS);
+}
+
+void print_prompt()
+{
+	if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "$ ", 2);
 }
