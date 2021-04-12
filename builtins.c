@@ -1,29 +1,36 @@
 #include "shell.h"
 
-char *_getline(char *buffer)
+char *_getline()
 {
-    int rd;
-    char c;
-    int i = 0;
-      
-    c = '\0';
+    char c = '\0', *buffer;
+    int i = 0, rd, bufferSize = BUF_SIZE;
+
+    buffer = malloc(sizeof(char) * BUF_SIZE + 1);
 
     while (c != '\n' && c != EOF)
-    { 
+    {
         rd = read(STDIN_FILENO, &c, 1);
+
         if (rd == 0)
         {
-            if (isatty(STDIN_FILENO))
-                write(STDIN_FILENO, "\n", 1);
+            c = EOF;
+            write(STDIN_FILENO, "\n", 1);
             free(buffer);
             exit(EXIT_SUCCESS);
         }
-        buffer[i] = c;        
+
+        if (i >= bufferSize - 1)
+        {
+            buffer = _realloc(buffer, bufferSize, sizeof(char) * (i + 2));
+            bufferSize = i + 2;
+        }
+        buffer[i] = c;
         i++;
     }
     buffer[i] = '\0';
-    /* printf("%d <-- count\n", i);*/
-    return(buffer);
+
+
+    return (buffer);
 }
 
 
@@ -53,7 +60,6 @@ int change_dir(char **argv)
     {
         b = chdir(home);
         if (b < 0)
-
             return (-1);
         return (0);
     } */
@@ -74,7 +80,7 @@ void close_shell(char **argv, char *buffer)
     if (argv[1] == NULL)
     {
         free_all(buffer, argv);
-	    exit (EXIT_SUCCESS);
+        exit (EXIT_SUCCESS);
     }
     if (argv[1] && argv[2])
     {

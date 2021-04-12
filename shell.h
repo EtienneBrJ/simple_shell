@@ -47,12 +47,12 @@ char **fill_directories(char *firstCommand);
 
 /* builtins */
 int change_dir(char **argv);
-char *_getline(char *buffer);
+char *_getline();
 void close_shell(char **argv, char *buffer);
 
 /* memory */
 void *_calloc(unsigned int nmemb, unsigned int size);
-void *_recalloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_double_ptr(char **double_point);
 void free_all(char *buffer, char **argv);
 

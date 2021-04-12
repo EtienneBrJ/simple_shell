@@ -5,13 +5,12 @@ int main(void)
 
 	while (PROMPT)
 	{
+		/*buffer = malloc(sizeof(char) * (BUF_SIZE + 1));*/
 		print_prompt();
 
 		signal(SIGINT, ctrlc);
-
-		buffer = malloc(BUF_SIZE * sizeof(char));
-
-		_getline(buffer);
+		
+		buffer = _getline();
 
 		argv = fill_argv(buffer);
 
