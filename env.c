@@ -75,11 +75,14 @@ void unset_env(char *buffer, char **argv, list_t *head)
             if (_strcmp(tmp->str, argv[1]) == 0)
             {
                delete_nodeint_at_index(&head, idx);
+               break;
+               
             }
             tmp = tmp->next;
             idx++;
 	    }
     }
+    
 }
 
 

@@ -110,7 +110,7 @@ int delete_nodeint_at_index(list_t **head, unsigned int index)
 
 	replace = tmp->next;
 	tmp->next = replace->next;
-	free(replace);
+	free_list(replace);
 
 	return (1);
 }
