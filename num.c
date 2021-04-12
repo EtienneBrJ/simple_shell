@@ -1,5 +1,5 @@
-#include "shell.h"
-
+ #include "shell.h"
+ 
 /**  _atoi d'Octave du printf, peut etre des modifs a faire
  * _atoi - convert a string to an integer
  * @s: a pointer
