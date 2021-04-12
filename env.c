@@ -29,3 +29,61 @@ void print_environment(char **environ)
     }
 }
 
+void set_env(char *buffer, char **argv, list_t *head)
+{
+    size_t lenght_list;
+
+    if (argv[1] ==  NULL)
+    {
+        free(buffer);
+        free_double_ptr(argv);
+    }
+    else if (argv[1] && argv[2])
+        {
+            puts("too many arguments");
+            free(buffer);
+            free_double_ptr(argv);           
+        }
+    else
+    {
+        lenght_list = listint_len(head);
+        lenght_list++;
+        add_node_end(&head, argv[1], lenght_list);
+    }
+    
+}
+
+void unset_env(char *buffer, char **argv, list_t *head)
+{
+    list_t *tmp = head;
+    size_t idx = 0;
+    if (argv[1] ==  NULL)
+    {
+        free(buffer);
+        free_double_ptr(argv);
+    }
+    else if (argv[1] && argv[2])
+        {
+            puts("too many arguments");
+            free(buffer);
+            free_double_ptr(argv);           
+        }
+    else
+    {
+	    while (tmp)
+	    {
+            if (_strcmp(tmp->str, argv[1]) == 0)
+            {
+               delete_nodeint_at_index(&head, idx);
+               break;
+               
+            }
+            tmp = tmp->next;
+            idx++;
+	    }
+    }
+    
+}
+
+
+

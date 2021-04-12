@@ -15,6 +15,30 @@
 
 extern char **environ;
 
+/**
+ * struct listint_s - singly linked list
+ * @n: integer
+ * @next: points to the next node
+ *
+ * Description: singly linked list node structure
+ * for Holberton project
+ */
+typedef struct list_s
+{
+	unsigned int index;
+	char *str;	
+	struct list_s *next;
+} list_t;
+
+
+/* linked list for env */
+list_t *add_node_end(list_t **head, char *str,  unsigned int index);
+size_t print_list(list_t *h);
+void free_list(list_t *head);
+list_t *init_list_env(list_t *h);
+size_t listint_len(list_t *h);
+int delete_nodeint_at_index(list_t **head, unsigned int index);
+
 /* main func */
 void print_prompt();
 void _execute(char *buffer, char **argv);
@@ -29,10 +53,14 @@ int _strcmp(char *s1, char *s2);
 char *_strncpy(char *dest, char *src, int n);
 char *_strstr(char *haystack, char *needle);
 char *strcpfullPath(char *fullpath, char *dir, char *command, int l, int n);
+char *_strdup(char *str);
 
 /* env */
 char *_getenv(char *var_env_name);
 void print_environment(char **environ);
+void unset_env(char *buffer, char **argv, list_t *head);
+
+void set_env(char *buffer, char **argv, list_t *head);
 
 /* count */
 int count_word(char *buffer);
@@ -44,14 +72,14 @@ char **fill_directories(char *firstCommand);
 
 /* builtins */
 int change_dir(char **argv);
-char *_getline();
-void close_shell(char **argv, char *buffer);
+char *_getline(list_t *head);
+void close_shell(char **argv, char *buffer, list_t *h);
 
 /* memory */
 void *_calloc(unsigned int nmemb, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_double_ptr(char **double_point);
-void free_all(char *buffer, char **argv);
+void free_all(char *buffer, char **argv, list_t *h);
 
 /* printing func */
 void _puts(char *str);
@@ -61,5 +89,7 @@ int _putchar(char c);
 int _atoi(char *s);
 int _isdigit(int c);
 int _isnumber(char *s);
+
+
 
 #endif

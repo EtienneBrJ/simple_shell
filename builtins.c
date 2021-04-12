@@ -1,6 +1,6 @@
 #include "shell.h"
 
-char *_getline()
+char *_getline(list_t *head)
 {
     char c = '\0', *buffer;
     int i = 0, rd, bufferSize = BUF_SIZE;
@@ -16,6 +16,7 @@ char *_getline()
             c = EOF;
             write(STDIN_FILENO, "\n", 1);
             free(buffer);
+            free_list(head);
             exit(EXIT_SUCCESS);
         }
 
@@ -60,7 +61,6 @@ int change_dir(char **argv)
     {
         b = chdir(home);
         if (b < 0)
-
             return (-1);
         return (0);
     } */
@@ -75,24 +75,24 @@ int change_dir(char **argv)
     return (0);
 }
 
-void close_shell(char **argv, char *buffer)
+void close_shell(char **argv, char *buffer, list_t *head)
 {
     int n = 0;
     if (argv[1] == NULL)
     {
-        free_all(buffer, argv);
+        free_all(buffer, argv, head);
         exit (EXIT_SUCCESS);
     }
     if (argv[1] && argv[2])
     {
         _puts("too many arguments");
-        free_all(buffer, argv);
+        free_all(buffer, argv, head);
         exit (EXIT_FAILURE);
     }
     if (_isnumber(argv[1]))                
     {
         n = _atoi(argv[1]);
-        free_all(buffer, argv);
+        free_all(buffer, argv, head);
         exit (n);
     }
 }
