@@ -77,8 +77,27 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	return (p_new);
 }
 
-void free_all(char *buffer, char **argv)
+void free_all(char *buffer, char **argv, list_t *head)
 {
 	free(buffer);
 	free_double_ptr(argv);
+	free_list(head);
+}
+
+
+/**
+ * free_list - frees a list
+ * @head: pointer to the first node of the list
+ */
+void free_list(list_t *head)
+{
+	list_t *tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->str);
+		free(tmp);
+	}
 }

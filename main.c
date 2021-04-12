@@ -4,6 +4,7 @@ int main(void)
 	char *buffer, **argv;
 	struct list_t;
     list_t *head;
+
 	head = NULL;
 
 	head = init_list_env(head);
@@ -15,7 +16,7 @@ int main(void)
 
 		signal(SIGINT, ctrlc);
 		
-		buffer = _getline();
+		buffer = _getline(head);
 
 		argv = fill_argv(buffer);
 
@@ -26,15 +27,23 @@ int main(void)
         }
 		if (_strcmp("setenv", argv[0]) == 0)
 		{
-			set_env(buffer, argv);
-			/*free_all(buffer, argv);*/
+			set_env(buffer, argv, head);
+			free(buffer);
+            free_double_ptr(argv); 
+			continue;
+		}
+		if (_strcmp("unsetenv", argv[0]) == 0)
+		{
+			unset_env(buffer, argv, head);
+			free(buffer);
+            free_double_ptr(argv); 
 			continue;
 		}
 		if (_strcmp("env", argv[0]) == 0)
 			print_list(head);
 
 		if (_strcmp("exit", argv[0]) == 0)
-			close_shell(argv, buffer);
+			close_shell(argv, buffer, head);
 		
 		if (_strcmp("cd", argv[0]) == 0)
 		{
