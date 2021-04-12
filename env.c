@@ -29,3 +29,36 @@ void print_environment(char **environ)
     }
 }
 
+void set_env(char *buffer, char **argv)
+{
+    
+    int i = 0;
+    if (argv[1] ==  NULL)
+    {
+        printf("test");
+        free_all(buffer, argv);
+    }
+    else if (argv[1] && argv[2])
+        {
+            puts("too many arguments");
+            free_all(buffer, argv);
+            
+        }
+    else
+    {
+        while (environ[i] != NULL)
+            i++;
+
+        environ[i] = argv[1];
+        environ[i + 1] = NULL;
+        free(buffer);
+        free(argv[0]);
+    }
+    
+}
+
+/*void unset_env(char **environ)
+{
+    int i = 0;
+}
+*/

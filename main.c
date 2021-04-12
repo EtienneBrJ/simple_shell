@@ -14,17 +14,24 @@ int main(void)
 		_getline(buffer);
 
 		argv = fill_argv(buffer);
+
 		if (argv == NULL)
         {
             free(buffer);
             continue;
         }
-		if (_strcmp("exit", argv[0]) == 0)
-			close_shell(argv, buffer);
+		if (_strcmp("setenv", argv[0]) == 0)
+		{
+			set_env(buffer, argv);
+			/*free_all(buffer, argv);*/
 
+			continue;
+		}
 		if (_strcmp("env", argv[0]) == 0)
 			print_environment(environ);
-
+		if (_strcmp("exit", argv[0]) == 0)
+			close_shell(argv, buffer);
+		
 		if (_strcmp("cd", argv[0]) == 0)
 		{
 			change_dir(argv);

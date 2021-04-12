@@ -22,7 +22,7 @@ char *_getline(char *buffer)
         i++;
     }
     buffer[i] = '\0';
-       /* printf("%d <-- count\n", i);*/
+    /* printf("%d <-- count\n", i);*/
     return(buffer);
 }
 
