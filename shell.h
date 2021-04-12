@@ -1,7 +1,7 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#define BUF_SIZE 2048
+#define BUF_SIZE 256
 #define PROMPT 1
 
 #include <stdio.h>

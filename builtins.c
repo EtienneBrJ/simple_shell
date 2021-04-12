@@ -21,7 +21,8 @@ char *_getline(char *buffer)
         buffer[i] = c;        
         i++;
     }
-   /* printf("%d <-- count\n", i);*/
+    buffer[i] = '\0';
+       /* printf("%d <-- count\n", i);*/
     return(buffer);
 }
 
@@ -70,80 +71,21 @@ int change_dir(char **argv)
 void close_shell(char **argv, char *buffer)
 {
     int n = 0;
+    if (argv[1] == NULL)
+    {
+        free_all(buffer, argv);
+	    exit (EXIT_SUCCESS);
+    }
     if (argv[1] && argv[2])
     {
         _puts("too many arguments");
         free_all(buffer, argv);
         exit (EXIT_FAILURE);
     }
-    if (_isnumber(argv[1])) /*on doit créer une fonction qui check si c'est un numberen prenant en compte + et - (on va devoir utiliser _isdigit qu'on a deja fait) */	                        
+    if (_isnumber(argv[1]))                
     {
         n = _atoi(argv[1]);
         free_all(buffer, argv);
         exit (n);
     }
-	free_all(buffer, argv);
-	exit (EXIT_SUCCESS);
-}
-
-/**  _atoi d'Octave du printf, peut etre des modifs a faire
- * _atoi - convert a string to an integer
- * @s: a pointer
- *
- * Return: an integer
- */
-int _atoi(char *s)
-{
-	int ite1 = 0, ite2, num = 0, sign = 1;
-
-	while (s[ite1] != '\0' && (s[ite1] < '0' || s[ite1] > '9'))
-	{
-		if (s[ite1] == '-')
-		{
-			sign *= -1;
-		}
-		ite1++;
-	}
-	ite2 = ite1;
-    while (s[ite2] >= '0' && s[ite2] <= '9')
-	{
-		num = (num * 10) + (s[ite2] - '0') * sign;
-		ite2++;
-	}
-	return (num);
-}
-
-/**
- * _isnumber - check for numbers in string
- * @s: string to check 
- * Return: 1 or 0
- */
-int _isnumber(char *s)
-{
-	int i;
-
-	for (i = 0; s[i]; i++)
-	{
-        if (s[i] == ' ' || s[i] == '-' || s[i] == '+')
-            i++;
-		while (s[i])
-        {
-            if (!_isdigit(s[i]))
-			    return (EXIT_FAILURE);
-        }
-	}
-	return (EXIT_SUCCESS);
-}
-
-/**
- * _isdigit - check if digit
- * @c: digit to check
- * Return: 1 or 0
- */
-int _isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (EXIT_SUCCESS);
-	else
-		return (EXIT_FAILURE);
 }
