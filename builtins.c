@@ -76,7 +76,7 @@ void close_shell(char **argv, char *buffer)
         free_all(buffer, argv);
         exit (EXIT_FAILURE);
     }
-	if (_isnumber(argv[1])) /*on doit créer une fonction qui check si c'est un numberen prenant en compte + et - (on va devoir utiliser _isdigit qu'on a deja fait) */	                        
+    if (_isnumber(argv[1])) /*on doit créer une fonction qui check si c'est un numberen prenant en compte + et - (on va devoir utiliser _isdigit qu'on a deja fait) */	                        
     {
         n = _atoi(argv[1]);
         free_all(buffer, argv);
@@ -105,7 +105,7 @@ int _atoi(char *s)
 		ite1++;
 	}
 	ite2 = ite1;
-	while (s[ite2] >= '0' && s[ite2] <= '9')
+    while (s[ite2] >= '0' && s[ite2] <= '9')
 	{
 		num = (num * 10) + (s[ite2] - '0') * sign;
 		ite2++;
