@@ -25,11 +25,13 @@ int main(void)
             free(buffer);
             continue;
         }
+		
 		if (_strcmp("setenv", argv[0]) == 0)
 		{
 			set_env(buffer, argv, head);
 			free(buffer);
             free_double_ptr(argv); 
+			
 			continue;
 		}
 		if (_strcmp("unsetenv", argv[0]) == 0)
@@ -37,11 +39,13 @@ int main(void)
 			unset_env(buffer, argv, head);
 			free(buffer);
             free_double_ptr(argv); 
+			
 			continue;
 		}
 		if (_strcmp("env", argv[0]) == 0)
+		{
 			print_list(head);
-
+		}
 		if (_strcmp("exit", argv[0]) == 0)
 			close_shell(argv, buffer, head);
 		
@@ -50,6 +54,7 @@ int main(void)
 			change_dir(argv);
 			free_double_ptr(argv);
 			free(buffer);
+		
 			continue;
 		}
 		_execute(buffer, argv);
