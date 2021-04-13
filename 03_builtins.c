@@ -21,7 +21,7 @@ char *_getline(list_t *head)
 			write(STDIN_FILENO, "\n", 1);
 			free(buffer);
 			free_list(head);
-			exit(EXIT_SUCCESS);
+			exit(0);
 		}
 
 		if (i >= bufferSize - 1)
@@ -86,11 +86,11 @@ void close_shell(char **argv, char *buffer, list_t *head)
 	if (argv[1] == NULL)
 	{
 		free_exit(buffer, argv, head);
-		exit(EXIT_SUCCESS);
+		exit(0);
 	}
 	if (argv[1] && argv[2])
 	{
-		_puts("too many arguments");
+		perror("too many arguments");
 		free_exit(buffer, argv, head);
 		exit(EXIT_FAILURE);
 	}
