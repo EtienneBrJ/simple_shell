@@ -87,13 +87,13 @@ size_t listint_len(list_t *h)
 }
 
 /**
- * delete_nodeint_at_index - deletes the node at index index of a listint_t
+ * delete_node_at_index - deletes the node at index index of a listint_t
  * linked list
  * @head: pointer to pointer
  * @index: index of the list
  * Return: 1 if it's succeeded and -1 if it's failed
  */
-int delete_nodeint_at_index(list_t **head, unsigned int index)
+int delete_node_at_index(list_t **head, unsigned int index)
 {
 	list_t *tmp = *head;
 	list_t *replace;
@@ -115,10 +115,10 @@ int delete_nodeint_at_index(list_t **head, unsigned int index)
 		tmp = tmp->next;
 		i++;
 	}
-
 	replace = tmp->next;
 	tmp->next = replace->next;
-	free_list(replace);
+	free(replace->str);
+	free(replace);
 
 	return (1);
 }

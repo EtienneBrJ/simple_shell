@@ -85,19 +85,19 @@ void close_shell(char **argv, char *buffer, list_t *head)
 
 	if (argv[1] == NULL)
 	{
-		free_all(buffer, argv, head);
-		exit(EXIT_SUCCESS);
+    free_exit(buffer, argv, head);
+    exit(EXIT_SUCCESS);
 	}
 	if (argv[1] && argv[2])
 	{
 		_puts("too many arguments");
-		free_all(buffer, argv, head);
+		free_exit(buffer, argv, head);
 		exit(EXIT_FAILURE);
 	}
 	if (_isnumber(argv[1]))
 	{
 		n = _atoi(argv[1]);
-		free_all(buffer, argv, head);
+		free_exit(buffer, argv, head);
 		exit(n);
 	}
 }

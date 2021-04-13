@@ -19,30 +19,30 @@ int main(void)
 		buffer = _getline(head);
 		argv = fill_argv(buffer);
 		if (argv == NULL)
-		{	free(buffer);
+		{
+			free(buffer);
 			continue; }
 		if (_strcmp("setenv", argv[0]) == 0)
-		{	set_env(buffer, argv, head);
-			free(buffer);
-			free_double_ptr(argv);
+		{
+			set_env(buffer, argv, head);
 			continue; }
 		if (_strcmp("unsetenv", argv[0]) == 0)
-		{	unset_env(buffer, argv, head);
-			free(buffer);
-			free_double_ptr(argv);
+		{
+			unset_env(buffer, argv, head);
 			continue; }
 		if (_strcmp("env", argv[0]) == 0)
 			print_list(head);
 
 		if (_strcmp("exit", argv[0]) == 0)
 			close_shell(argv, buffer, head);
-
+    
 		if (_strcmp("cd", argv[0]) == 0)
-		{	change_dir(argv);
-			free_double_ptr(argv);
-			free(buffer);
-			continue; }
-		_execute(buffer, argv);
+		{
+			change_dir(argv);
+			free_all(buffer, argv);
+			continue;
+		}
+		_execute(buffer, argv, head);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -51,8 +51,9 @@ int main(void)
  * _execute - for the program to execute
  * @buffer: pointer
  * @argv: command line
+ * @head: struct
  */
-void _execute(char *buffer, char **argv)
+void _execute(char *buffer, char **argv, list_t *head)
 {
 	int status;
 
@@ -65,7 +66,7 @@ void _execute(char *buffer, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		path_tester(argv, buffer);
+		path_tester(argv, buffer, head);
 	else
 	{
 		wait(&status);
@@ -77,8 +78,9 @@ void _execute(char *buffer, char **argv)
  * path_tester - test path
  * @argv: command line
  * @buffer: pointer
+ * @head: struct
  */
-void path_tester(char **argv, char *buffer)
+void path_tester(char **argv, char *buffer, list_t *head)
 {
 	struct stat st;
 	char **directories;
@@ -99,7 +101,8 @@ void path_tester(char **argv, char *buffer)
 
 	free(buffer);
 	free_double_ptr(argv);
-	free_double_ptr(directories);
+  free_double_ptr(directories);
+	free_list(head);
 	exit(EXIT_SUCCESS);
 }
 

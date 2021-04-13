@@ -36,12 +36,11 @@ size_t print_list(list_t *h);
 void free_list(list_t *head);
 list_t *init_list_env(list_t *h);
 size_t listint_len(list_t *h);
-int delete_nodeint_at_index(list_t **head, unsigned int index);
-
+int delete_node_at_index(list_t **head, unsigned int index);
 /* main func */
 void print_prompt(void);
-void _execute(char *buffer, char **argv);
-void path_tester(char **argv, char *buffer);
+void _execute(char *buffer, char **argv, list_t *h);
+void path_tester(char **argv, char *buffer, list_t *h);
 
 /* for signal */
 void ctrlc(int i);
@@ -78,7 +77,8 @@ void close_shell(char **argv, char *buffer, list_t *h);
 void *_calloc(unsigned int nmemb, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_double_ptr(char **double_point);
-void free_all(char *buffer, char **argv, list_t *h);
+void free_exit(char *buffer, char **argv, list_t *h);
+void free_all(char *buffer, char **argv);
 
 /* printing func */
 void _puts(char *str);

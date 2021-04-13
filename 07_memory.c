@@ -37,8 +37,7 @@ void free_double_ptr(char **double_point)
 		free(double_point[i]);
 		i++;
 	}
-
-	if (double_point[i] == NULL)
+	/*if (double_point[i] == NULL)*/
 		free(double_point[i]);
 
 	free(double_point);
@@ -82,31 +81,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	free(ptr);
 	return (p_new);
 }
-/**
- * free_all - function that free all
- * @buffer: buffer
- * @argv: command line
- * @head: point to struct
- */
-void free_all(char *buffer, char **argv, list_t *head)
-{
-	free(buffer);
-	free_double_ptr(argv);
-	free_list(head);
-}
-/**
- * free_list - frees a list
- * @head: pointer to the first node of the list
- */
-void free_list(list_t *head)
-{
-	list_t *tmp;
 
-	while (head)
-	{
-		tmp = head;
-		head = head->next;
-		free(tmp->str);
-		free(tmp);
-	}
-}
+
+
