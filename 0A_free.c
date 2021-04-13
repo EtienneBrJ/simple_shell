@@ -3,13 +3,13 @@
  * free_exit - function that free all
  * @buffer: buffer
  * @argv: command line
- * @head: point to struct
+ * 
  */
-void free_exit(char *buffer, char **argv, list_t *head)
+void free_exit(char *buffer, char **argv)
 {
 	free(buffer);
 	free_double_ptr(argv);
-	free_list(head);
+	
 }
 /**
  * free_list - frees a list

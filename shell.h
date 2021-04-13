@@ -39,8 +39,8 @@ size_t listint_len(list_t *h);
 int delete_node_at_index(list_t **head, unsigned int index);
 /* main func */
 void print_prompt(void);
-void _execute(char *buffer, char **argv, list_t *h);
-void path_tester(char **argv, char *buffer, list_t *h);
+void _execute(char *buffer, char **argv);
+void path_tester(char **argv, char *buffer);
 
 /* for signal */
 void ctrlc(int i);
@@ -70,14 +70,14 @@ char **fill_directories(char *firstCommand);
 
 /* builtins */
 int change_dir(char **argv);
-char *_getline(list_t *head);
-void close_shell(char **argv, char *buffer, list_t *h);
+char *_getline();
+void close_shell(char **argv, char *buffer);
 
 /* memory */
 void *_calloc(unsigned int nmemb, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_double_ptr(char **double_point);
-void free_exit(char *buffer, char **argv, list_t *h);
+void free_exit(char *buffer, char **argv);
 void free_all(char *buffer, char **argv);
 
 /* printing func */

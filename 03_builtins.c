@@ -4,7 +4,7 @@
  * @head: linkedlist of the environment
  * Return: returns buffer
  */
-char *_getline(list_t *head)
+char *_getline()
 {
 	char c = '\0', *buffer;
 	int i = 0, rd, bufferSize = BUF_SIZE;
@@ -20,7 +20,6 @@ char *_getline(list_t *head)
 			c = EOF;
 			write(STDIN_FILENO, "\n", 1);
 			free(buffer);
-			free_list(head);
 			exit(0);
 		}
 
@@ -79,25 +78,25 @@ int change_dir(char **argv)
  * @buffer: buffer
  * @head: linkedlist of environ
  */
-void close_shell(char **argv, char *buffer, list_t *head)
+void close_shell(char **argv, char *buffer)
 {
 	int n = 0;
 
 	if (argv[1] == NULL)
 	{
-		free_exit(buffer, argv, head);
+		free_exit(buffer, argv);
 		exit(0);
 	}
 	if (argv[1] && argv[2])
 	{
 		perror("too many arguments");
-		free_exit(buffer, argv, head);
+		free_exit(buffer, argv);
 		exit(EXIT_FAILURE);
 	}
 	if (_isnumber(argv[1]))
 	{
 		n = _atoi(argv[1]);
-		free_exit(buffer, argv, head);
+		free_exit(buffer, argv);
 		exit(n);
 	}
 }
