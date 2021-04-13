@@ -85,8 +85,8 @@ void close_shell(char **argv, char *buffer, list_t *head)
 
 	if (argv[1] == NULL)
 	{
-    free_exit(buffer, argv, head);
-    exit(EXIT_SUCCESS);
+		free_exit(buffer, argv, head);
+		exit(EXIT_SUCCESS);
 	}
 	if (argv[1] && argv[2])
 	{
