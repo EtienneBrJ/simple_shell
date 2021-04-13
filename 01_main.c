@@ -43,7 +43,7 @@ int main(void)
 		}
 		_execute(buffer, argv, head);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 /**
