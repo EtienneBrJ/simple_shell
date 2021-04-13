@@ -44,7 +44,6 @@ void print_environment(char **environ)
  */
 void set_env(char *buffer, char **argv, list_t *head)
 {
-
 	if (argv[1] == NULL)
 	{
 		free(buffer);
@@ -61,6 +60,7 @@ void set_env(char *buffer, char **argv, list_t *head)
 		add_node_end(&head, argv[1], 0);
 		free(buffer);
 		free_double_ptr(argv);
+
 	}
 }
 /**
@@ -99,6 +99,5 @@ void unset_env(char *buffer, char **argv, list_t *head)
 		}
 		free(buffer);
 		free_double_ptr(argv);
-		/*free_list(tmp)*/
 	}
 }
