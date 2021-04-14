@@ -80,7 +80,7 @@ void close_shell(char **argv, char *buffer)
 {
 	int n = 0;
 
-	if (argv[1] == NULL)
+	if (argv[0])
 	{
 		free_exit(buffer, argv);
 		exit(EXIT_SUCCESS);
@@ -98,3 +98,4 @@ void close_shell(char **argv, char *buffer)
 		exit(n);
 	}
 }
+
