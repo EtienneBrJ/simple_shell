@@ -11,11 +11,13 @@ int main(void)
 	list_t *head;
 
 	head = NULL;
-	head = init_list_env(head);
+
 	while (PROMPT)
 	{
 		print_prompt();
 		signal(SIGINT, ctrlc);
+		if (!head)
+			head = init_list_env(head);
 		buffer = _getline(head);
 		argv = fill_argv(buffer);
 		if (argv == NULL)
@@ -31,11 +33,10 @@ int main(void)
 			unset_env(buffer, argv, head);
 			continue; }
 		if (_strcmp("env", argv[0]) == 0)
-			print_list(head);
+			print_environment();
 
 		if (_strcmp("exit", argv[0]) == 0)
 			close_shell(argv, buffer, head);
-    
 		if (_strcmp("cd", argv[0]) == 0)
 		{
 			change_dir(argv);
@@ -101,7 +102,7 @@ void path_tester(char **argv, char *buffer, list_t *head)
 
 	free(buffer);
 	free_double_ptr(argv);
-  free_double_ptr(directories);
+	free_double_ptr(directories);
 	free_list(head);
 	exit(EXIT_SUCCESS);
 }

@@ -35,8 +35,3 @@ int count_directories(char *path)
 
 	return (nb_dir);
 }
-
-
-
-
-

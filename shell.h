@@ -55,7 +55,7 @@ char *_strdup(char *str);
 
 /* env */
 char *_getenv(char *var_env);
-void print_environment(char **environ);
+void print_environment(void);
 void unset_env(char *buffer, char **argv, list_t *head);
 
 void set_env(char *buffer, char **argv, list_t *head);

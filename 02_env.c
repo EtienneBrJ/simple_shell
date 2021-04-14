@@ -18,9 +18,8 @@ char *_getenv(char *var_env)
 }
 /**
  * print_environment - print environment
- * @environ: pointer of pointer to environ
  */
-void print_environment(char **environ)
+void print_environment(void)
 {
 	int i, length;
 
