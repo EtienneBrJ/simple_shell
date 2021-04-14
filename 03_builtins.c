@@ -83,13 +83,13 @@ void close_shell(char **argv, char *buffer)
 	if (argv[0])
 	{
 		free_exit(buffer, argv);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	if (argv[1] && argv[2])
 	{
-		perror("too many arguments");
+		perror(": numeric argument required");
 		free_exit(buffer, argv);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	if (_isnumber(argv[1]))
 	{

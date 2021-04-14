@@ -3,13 +3,13 @@
  * free_exit - function that free all
  * @buffer: buffer
  * @argv: command line
- * 
+ *
  */
 void free_exit(char *buffer, char **argv)
 {
 	free(buffer);
 	free_double_ptr(argv);
-	
+
 }
 /**
  * free_list - frees a list

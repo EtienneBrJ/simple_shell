@@ -81,8 +81,7 @@ void unset_env(char *buffer, char **argv, list_t *head)
 	}
 	else if (argv[1] && argv[2])
 	{
-		_puts("too many arguments");
-		free(buffer);
+		perror("too many arguments");
 		free_double_ptr(argv);
 	}
 	else
