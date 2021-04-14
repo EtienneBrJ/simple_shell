@@ -22,7 +22,7 @@ int main(void)
 		{
 			free(buffer);
 			continue; }
-		if (_strcmp("env", argv[0]) == 0)
+		if (_strcmp("env", argv[0]) == 0 && argv[1] == NULL)
 			print_environment();
 
 		if (_strcmp("exit", argv[0]) == 0)
