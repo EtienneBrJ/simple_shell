@@ -76,10 +76,10 @@ int change_dir(char **argv)
  * @argv: command line
  * @buffer: buffer
  */
-void close_shell(char **argv, char *buffer)
+void close_shell(char **argv, char *buffer, int cont)
 {
 	int n = 0;
-
+	(void)cont;
 	if (argv[1] == NULL)
 	{
 		free_exit(buffer, argv);
@@ -87,6 +87,14 @@ void close_shell(char **argv, char *buffer)
 	}
 	if (argv[1] || argv[2])
 	{
+		write(2, "./hsh: ", 7);
+		print_number(cont);
+		write(2, ": ", 2);
+		write(2, argv[0], _strlen(argv[0]));
+		write(2, ": Illegal number", 16);
+		write(2, ": ", 2);
+		write(2, argv[1], _strlen(argv[1]));
+		write(2,"\n", 1);
 		free_exit(buffer, argv);
 		exit(EXIT_SUCCESS);
 	}
