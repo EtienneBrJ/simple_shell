@@ -1,0 +1,86 @@
+.TH simple_shell 1 "15 April 2021" "version 1.0"
+.SH NAME
+.B hsh - GNU
+.SH SYNOPSIS
+.SH 
+.IP #include"shell.h"
+.SH 
+.IP ./hsh
+command [-arg1] [-arg2] [...]
+
+.SH DESCRIPTION
+Simple_shell is an sh-compatible command language interpreter that executes commands read from the standard input or from a file.
+
+.SH OPTIONS
+All of the single-character shell options documented in the description of the set builtin command can be used as options when the shell is invoked. In addition, simple_shell interprets the following options when it is invoked:
+
+.SH INVOCATION
+An interactive shell is one started without non-option arguments whose standard input and error are both connected to terminals (as determined by isatty(3)).
+
+The following paragraphs describe how simple_shell executes its startup files. If any of the files exist but cannot be read, simple_shell reports an error.
+
+When simple_shell is invoked as an interactive login shell, or as a non-interactive shell, it first reads and executes commands from STDIN
+
+When simple_shell is started non-interactively, to run a shell script, for example, it looks for the variable PATH in the environment, expands its value  if it appears there, and uses the expanded value as the name of a file to read and execute.
+
+.SH Word Splitting
+The shell scans the results of parameter  expansion, command substitution, and arithmetic expansion that did not occur within double quotes for word splitting.
+
+The shell treats each character of IFS as a delimiter, and splits the results of the other expansions into words using these characters as field terminators. If IFS is unset, or its value is exactly <space><tab><newline>, the default, then sequences of <space>, <tab>, and <newline> at the beginning and end of the results of the previous expansions are ignored, and any sequence of IFS characters not at the beginning or end serves to delimit words. If IFS has a value other than the default, then sequences of the whitespace characters space and tab are ignored at the beginning and end of the word. If the value of IFS is null, no word splitting occurs.
+
+Note that if no expansion occurs, no splitting is performed.
+
+.SH ENVIRONMENT
+When a program is invoked it is given an array of strings called the environment. This is a list of name-value pairs, of the form name=value.
+
+.SH SIGNALS
+When simple_shell is interactive, it ignores SIGINT, is caught and handled (so that the wait builtin is interruptible).
+
+.SH SHELL BUILTIN COMMANDS
+
+.IP exit
+Cause the shell to exit.
+
+.IP env
+Print to stdout the environment variables.
+
+.SH EXAMPLE OF COMMANDS
+Returns with a new prompt: "$ "
+
+ls -l
+/bin/ls
+
+ls -l /tmp
+
+echo 'hello World'
+
+.SH Exit Status
+.IP 0
+if ok
+.IP 1
+if error
+
+.SH BUGS
+Report 
+.B simple shell 
+bugs to https://github.com/EtienneBrJ/simple_shell
+
+.SH SEE ALSO
+Bash Reference Manual, Brian Fox and Chet Ramey
+The Gnu Readline Library, Brian Fox and Chet Ramey
+The Gnu History Library, Brian Fox and Chet Ramey
+Portable Operating System Interface (POSIX) Part 2: Shell and Utilities, IEEE --
+http://pubs.opengroup.org/onlinepubs/9699919799/
+http://tiswww.case.edu/~chet/bash/POSIX -- a description of posix mode
+sh(1), ksh(1), csh(1)
+emacs(1), vi(1)
+readline(3)
+
+.SH AUTHOR
+- Etienne BRUN 2696@holbertonschool.com
+
+- Simon BRARD 2835@holbertonschool.com
+
+.SH COPYRIGHT
+Project for Holberton School, Holberton School Haut de France This is free of right: you are free to use, change or copy it.
+© 2021 GitHub, Inc.
