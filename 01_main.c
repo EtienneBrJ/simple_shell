@@ -9,6 +9,7 @@ int main(void)
 	char *buffer, **argv;
 	int cont = 0;
 
+
 	while (PROMPT)
 	{
 		cont++;
@@ -33,7 +34,7 @@ int main(void)
 		}
 		_execute(buffer, argv, cont);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -51,7 +52,7 @@ void _execute(char *buffer, char **argv, int cont)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Error: fork() return -1");
+		perror("Error: fork()");
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)

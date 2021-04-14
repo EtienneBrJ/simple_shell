@@ -83,13 +83,12 @@ void close_shell(char **argv, char *buffer)
 	if (argv[1] == NULL)
 	{
 		free_exit(buffer, argv);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	if (argv[1] || argv[2])
 	{
-		
 		free_exit(buffer, argv);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	if (_isnumber(argv[1]))
 	{
