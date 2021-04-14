@@ -115,14 +115,10 @@ int delete_node_at_index(list_t **head, unsigned int index)
 		tmp = tmp->next;
 		i++;
 	}
-
 	replace = tmp->next;
 	tmp->next = replace->next;
-
 	free(replace->str);
 	free(replace);
-
-
 
 	return (1);
 }

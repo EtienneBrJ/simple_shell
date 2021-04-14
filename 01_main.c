@@ -7,43 +7,30 @@
 int main(void)
 {
 	char *buffer, **argv;
-	struct list_t;
-	list_t *head;
 
-	head = NULL;
-	head = init_list_env(head);
 	while (PROMPT)
 	{
 		print_prompt();
 		signal(SIGINT, ctrlc);
-		buffer = _getline(head);
+		buffer = _getline();
 		argv = fill_argv(buffer);
 		if (argv == NULL)
 		{
 			free(buffer);
-			continue; }
-		if (_strcmp("setenv", argv[0]) == 0)
-		{
-			set_env(buffer, argv, head);
-			continue; }
-		if (_strcmp("unsetenv", argv[0]) == 0)
-		{
-			unset_env(buffer, argv, head);
 			continue;
 		}
 		if (_strcmp("env", argv[0]) == 0)
-			print_list(head);
+			print_environment(environ);
 
 		if (_strcmp("exit", argv[0]) == 0)
-			close_shell(argv, buffer, head);
-
+			close_shell(argv, buffer);
 		if (_strcmp("cd", argv[0]) == 0)
 		{
 			change_dir(argv);
 			free_all(buffer, argv);
 			continue;
 		}
-		_execute(buffer, argv, head);
+		_execute(buffer, argv);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -52,9 +39,8 @@ int main(void)
  * _execute - for the program to execute
  * @buffer: pointer
  * @argv: command line
- * @head: struct
  */
-void _execute(char *buffer, char **argv, list_t *head)
+void _execute(char *buffer, char **argv)
 {
 	int status;
 
@@ -63,11 +49,11 @@ void _execute(char *buffer, char **argv, list_t *head)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Error: fork() return -1");
+		perror("Error: fork()");
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		path_tester(argv, buffer, head);
+		path_tester(argv, buffer);
 	else
 	{
 		wait(&status);
@@ -79,9 +65,8 @@ void _execute(char *buffer, char **argv, list_t *head)
  * path_tester - test path
  * @argv: command line
  * @buffer: pointer
- * @head: struct
  */
-void path_tester(char **argv, char *buffer, list_t *head)
+void path_tester(char **argv, char *buffer)
 {
 	struct stat st;
 	char **directories;
@@ -103,7 +88,6 @@ void path_tester(char **argv, char *buffer, list_t *head)
 	free(buffer);
 	free_double_ptr(argv);
 	free_double_ptr(directories);
-	free_list(head);
 	exit(EXIT_SUCCESS);
 }
 

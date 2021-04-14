@@ -1,10 +1,9 @@
 #include "shell.h"
 /**
  * _getline - reads an entire line from stream
- * @head: linkedlist of the environment
  * Return: returns buffer
  */
-char *_getline(list_t *head)
+char *_getline()
 {
 	char c = '\0', *buffer;
 	int i = 0, rd, bufferSize = BUF_SIZE;
@@ -20,8 +19,7 @@ char *_getline(list_t *head)
 			c = EOF;
 			write(STDIN_FILENO, "\n", 1);
 			free(buffer);
-			free_list(head);
-			exit(EXIT_SUCCESS);
+			exit(0);
 		}
 
 		if (i >= bufferSize - 1)
@@ -77,27 +75,26 @@ int change_dir(char **argv)
  * close_shell - close the shell and free memory
  * @argv: command line
  * @buffer: buffer
- * @head: linkedlist of environ
  */
-void close_shell(char **argv, char *buffer, list_t *head)
+void close_shell(char **argv, char *buffer)
 {
 	int n = 0;
 
 	if (argv[1] == NULL)
 	{
-		free_exit(buffer, argv, head);
+		free_exit(buffer, argv);
 		exit(EXIT_SUCCESS);
 	}
 	if (argv[1] && argv[2])
 	{
-		_puts("too many arguments");
-		free_exit(buffer, argv, head);
-		exit(EXIT_FAILURE);
+		perror(": numeric argument required");
+		free_exit(buffer, argv);
+		exit(EXIT_SUCCESS);
 	}
 	if (_isnumber(argv[1]))
 	{
 		n = _atoi(argv[1]);
-		free_exit(buffer, argv, head);
+		free_exit(buffer, argv);
 		exit(n);
 	}
 }
