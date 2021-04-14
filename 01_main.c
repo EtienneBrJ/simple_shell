@@ -91,7 +91,7 @@ void path_tester(char **argv, char *buffer, int cont)
 	write(2, "./hsh: ", 7);
 	print_number(cont);
 	write(2, ": ", 2);
-	_puts(argv[0]);
+	write(2, argv[0], _strlen(argv[0]));
 	write(2, ": not found\n", 12);
 
 	free(buffer);
