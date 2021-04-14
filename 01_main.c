@@ -7,7 +7,6 @@
 int main(void)
 {
 	char *buffer, **argv;
-	                      
 
 	while (PROMPT)
 	{
@@ -18,8 +17,8 @@ int main(void)
 		if (argv == NULL)
 		{
 			free(buffer);
-			continue; }
-		
+			continue;
+		}
 		if (_strcmp("env", argv[0]) == 0)
 			print_environment(environ);
 
@@ -33,7 +32,7 @@ int main(void)
 		}
 		_execute(buffer, argv);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -50,7 +49,7 @@ void _execute(char *buffer, char **argv)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Error: fork() return -1");
+		perror("Error: fork()");
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)

@@ -1,7 +1,6 @@
 #include "shell.h"
 /**
  * _getline - reads an entire line from stream
- * @head: linkedlist of the environment
  * Return: returns buffer
  */
 char *_getline()
@@ -76,7 +75,6 @@ int change_dir(char **argv)
  * close_shell - close the shell and free memory
  * @argv: command line
  * @buffer: buffer
- * @head: linkedlist of environ
  */
 void close_shell(char **argv, char *buffer)
 {
@@ -85,13 +83,13 @@ void close_shell(char **argv, char *buffer)
 	if (argv[1] == NULL)
 	{
 		free_exit(buffer, argv);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	if (argv[1] && argv[2])
 	{
-		perror("too many arguments");
+		perror(": numeric argument required");
 		free_exit(buffer, argv);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	if (_isnumber(argv[1]))
 	{
