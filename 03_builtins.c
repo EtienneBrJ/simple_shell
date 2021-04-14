@@ -80,14 +80,13 @@ void close_shell(char **argv, char *buffer)
 {
 	int n = 0;
 
-	if (argv[0])
+	if (argv[1] == NULL)
 	{
 		free_exit(buffer, argv);
 		exit(EXIT_SUCCESS);
 	}
-	if (argv[1] && argv[2])
+	if (argv[1] || argv[2])
 	{
-		perror(": numeric argument required");
 		free_exit(buffer, argv);
 		exit(EXIT_SUCCESS);
 	}
