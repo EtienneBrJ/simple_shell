@@ -86,7 +86,7 @@ void close_shell(char **argv, char *buffer, int cont)
 		free_exit(buffer, argv);
 		exit(EXIT_SUCCESS);
 	}
-	if (argv[1] || argv[2])
+	if (argv[1])
 	{
 		write(2, "./hsh: ", 7);
 		print_number(cont);
