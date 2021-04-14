@@ -37,6 +37,7 @@ void free_double_ptr(char **double_point)
 		free(double_point[i]);
 		i++;
 	}
+
 	/*if (double_point[i] == NULL)*/
 		free(double_point[i]);
 
@@ -81,6 +82,4 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	free(ptr);
 	return (p_new);
 }
-
-
 
