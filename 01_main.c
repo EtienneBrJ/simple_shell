@@ -7,43 +7,33 @@
 int main(void)
 {
 	char *buffer, **argv;
-	struct list_t;
-	list_t *head;
-
-	head = NULL;
+	int cont = 0;
 
 	while (PROMPT)
 	{
+		cont++;
 		print_prompt();
 		signal(SIGINT, ctrlc);
-		if (!head)
-			head = init_list_env(head);
-		buffer = _getline(head);
+
+		buffer = _getline();
+
 		argv = fill_argv(buffer);
 		if (argv == NULL)
 		{
 			free(buffer);
 			continue; }
-		if (_strcmp("setenv", argv[0]) == 0)
-		{
-			set_env(buffer, argv, head);
-			continue; }
-		if (_strcmp("unsetenv", argv[0]) == 0)
-		{
-			unset_env(buffer, argv, head);
-			continue; }
 		if (_strcmp("env", argv[0]) == 0)
 			print_environment();
 
 		if (_strcmp("exit", argv[0]) == 0)
-			close_shell(argv, buffer, head);
+			close_shell(argv, buffer, cont);
 		if (_strcmp("cd", argv[0]) == 0)
 		{
 			change_dir(argv);
 			free_all(buffer, argv);
 			continue;
 		}
-		_execute(buffer, argv, head);
+		_execute(buffer, argv, cont);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -52,22 +42,22 @@ int main(void)
  * _execute - for the program to execute
  * @buffer: pointer
  * @argv: command line
- * @head: struct
+ * @cont: cont
  */
-void _execute(char *buffer, char **argv, list_t *head)
+void _execute(char *buffer, char **argv, int cont)
 {
 	int status;
-
 	pid_t pid = 0;
+	(void)cont;
 
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Error: fork() return -1");
+		perror("Error: fork()");
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		path_tester(argv, buffer, head);
+		path_tester(argv, buffer, cont);
 	else
 	{
 		wait(&status);
@@ -79,13 +69,14 @@ void _execute(char *buffer, char **argv, list_t *head)
  * path_tester - test path
  * @argv: command line
  * @buffer: pointer
- * @head: struct
+ * @cont: cont
  */
-void path_tester(char **argv, char *buffer, list_t *head)
+void path_tester(char **argv, char *buffer, int cont)
 {
 	struct stat st;
 	char **directories;
 	int i = 0;
+	(void)cont;
 
 	directories = fill_directories(argv[0]);
 	while (directories[i])
@@ -98,12 +89,15 @@ void path_tester(char **argv, char *buffer, list_t *head)
 		execve(argv[0], argv, NULL);
 	/* si on arrive ici c'est que lac commande existe pas*/
 	/*il faudra voir pour print error comme /bin/sh*/
-	perror(argv[0]);
+	write(2, "./hsh: ", 7);
+	print_number(cont);
+	write(2, ": ", 2);
+	write(2, argv[0], _strlen(argv[0]));
+	write(2, ": not found\n", 12);
 
 	free(buffer);
 	free_double_ptr(argv);
 	free_double_ptr(directories);
-	free_list(head);
 	exit(EXIT_SUCCESS);
 }
 
@@ -114,4 +108,24 @@ void print_prompt(void)
 {
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "$ ", 2);
+}
+/**
+ * print_number - print number
+ * @n: int
+ */
+void print_number(int n)
+{
+	char ni = NULL;
+
+	if (n > 9)
+	{
+		print_number(n / 10);
+		ni = ('0' + (n % 10));
+		write(2, &ni, 1);
+	}
+	else
+	{
+		ni = '0' + n;
+		write(2, &ni, 1);
+	}
 }

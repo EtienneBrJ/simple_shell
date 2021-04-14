@@ -1,10 +1,9 @@
 #include "shell.h"
 /**
  * _getline - reads an entire line from stream
- * @head: linkedlist of the environment
  * Return: returns buffer
  */
-char *_getline(list_t *head)
+char *_getline()
 {
 	char c = '\0', *buffer;
 	int i = 0, rd, bufferSize = BUF_SIZE;
@@ -20,8 +19,7 @@ char *_getline(list_t *head)
 			c = EOF;
 			write(STDIN_FILENO, "\n", 1);
 			free(buffer);
-			free_list(head);
-			exit(EXIT_SUCCESS);
+			exit(0);
 		}
 
 		if (i >= bufferSize - 1)
@@ -77,29 +75,41 @@ int change_dir(char **argv)
  * close_shell - close the shell and free memory
  * @argv: command line
  * @buffer: buffer
- * @head: linkedlist of environ
+ * @cont: cont
  */
-void close_shell(char **argv, char *buffer, list_t *head)
+void close_shell(char **argv, char *buffer, int cont)
 {
 	int n = 0;
-
-
-	if (argv[1] && argv[2])
+	(void)cont;
+	if (argv[1] == NULL)
 	{
-		_puts("too many arguments");
-		free_exit(buffer, argv, head);
-		exit(EXIT_FAILURE);
+		free_exit(buffer, argv);
+		exit(EXIT_SUCCESS);
+	}
+	if (argv[1])
+	{
+		write(2, "./hsh: ", 7);
+		print_number(cont);
+		write(2, ": ", 2);
+		write(2, argv[0], _strlen(argv[0]));
+		write(2, ": Illegal number", 16);
+		write(2, ": ", 2);
+		write(2, argv[1], _strlen(argv[1]));
+		write(2, "\n", 1);
+		free_exit(buffer, argv);
+		exit(2);
 	}
 	else if (_isnumber(argv[1]))
 	{
 		n = _atoi(argv[1]);
-
+		free_exit(buffer, argv);
 		exit(n);
 	}
 	else
 	{
-		free_exit(buffer, argv, head);
+		free_exit(buffer, argv);
 		exit(EXIT_SUCCESS);
 	}
 
 }
+
