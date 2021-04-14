@@ -75,6 +75,7 @@ int change_dir(char **argv)
  * close_shell - close the shell and free memory
  * @argv: command line
  * @buffer: buffer
+ * @cont: cont
  */
 void close_shell(char **argv, char *buffer, int cont)
 {
@@ -94,9 +95,9 @@ void close_shell(char **argv, char *buffer, int cont)
 		write(2, ": Illegal number", 16);
 		write(2, ": ", 2);
 		write(2, argv[1], _strlen(argv[1]));
-		write(2,"\n", 1);
+		write(2, "\n", 1);
 		free_exit(buffer, argv);
-		exit(EXIT_SUCCESS);
+		exit(2);
 	}
 	if (_isnumber(argv[1]))
 	{
