@@ -99,11 +99,17 @@ void close_shell(char **argv, char *buffer, int cont)
 		free_exit(buffer, argv);
 		exit(2);
 	}
-	if (_isnumber(argv[1]))
+	else if (_isnumber(argv[1]))
 	{
 		n = _atoi(argv[1]);
 		free_exit(buffer, argv);
 		exit(n);
 	}
+	else
+	{
+		free_exit(buffer, argv);
+		exit(EXIT_SUCCESS);
+	}
+
 }
 

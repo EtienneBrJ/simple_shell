@@ -9,20 +9,21 @@ int main(void)
 	char *buffer, **argv;
 	int cont = 0;
 
-
 	while (PROMPT)
 	{
 		cont++;
 		print_prompt();
 		signal(SIGINT, ctrlc);
+
 		buffer = _getline();
+
 		argv = fill_argv(buffer);
 		if (argv == NULL)
 		{
 			free(buffer);
 			continue; }
 		if (_strcmp("env", argv[0]) == 0)
-			print_environment(environ);
+			print_environment();
 
 		if (_strcmp("exit", argv[0]) == 0)
 			close_shell(argv, buffer, cont);
