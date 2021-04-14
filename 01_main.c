@@ -25,7 +25,7 @@ int main(void)
 			print_environment(environ);
 
 		if (_strcmp("exit", argv[0]) == 0)
-			close_shell(argv, buffer);
+			close_shell(argv, buffer, cont);
 		if (_strcmp("cd", argv[0]) == 0)
 		{
 			change_dir(argv);

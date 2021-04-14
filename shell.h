@@ -71,7 +71,7 @@ char **fill_directories(char *firstCommand);
 /* builtins */
 int change_dir(char **argv);
 char *_getline();
-void close_shell(char **argv, char *buffer);
+void close_shell(char **argv, char *buffer, int cont);
 
 /* memory */
 void *_calloc(unsigned int nmemb, unsigned int size);
