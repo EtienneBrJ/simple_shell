@@ -39,8 +39,8 @@ size_t listint_len(list_t *h);
 int delete_node_at_index(list_t **head, unsigned int index);
 /* main func */
 void print_prompt(void);
-void _execute(char *buffer, char **argv);
-void path_tester(char **argv, char *buffer);
+void _execute(char *buffer, char **argv, int cont);
+void path_tester(char **argv, char *buffer, int cont);
 
 /* for signal */
 void ctrlc(int i);
@@ -89,6 +89,7 @@ int _atoi(char *s);
 int _isdigit(int c);
 int _isnumber(char *s);
 
+void print_number(int n);
 
 
 #endif

@@ -1,7 +1,6 @@
 #include "shell.h"
 /**
  * _getline - reads an entire line from stream
- * @head: linkedlist of the environment
  * Return: returns buffer
  */
 char *_getline()
@@ -76,13 +75,12 @@ int change_dir(char **argv)
  * close_shell - close the shell and free memory
  * @argv: command line
  * @buffer: buffer
- * @head: linkedlist of environ
  */
 void close_shell(char **argv, char *buffer)
 {
 	int n = 0;
 
-	if (argv[1] == NULL)
+	if (argv[0])
 	{
 		free_exit(buffer, argv);
 		exit(0);
@@ -100,3 +98,4 @@ void close_shell(char **argv, char *buffer)
 		exit(n);
 	}
 }
+
