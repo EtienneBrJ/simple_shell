@@ -6,47 +6,39 @@
  */
 char **fill_argv(char *buffer)
 {
+	char *delim = " \n\t\r\f\v";
+	char **conteneur;
+	char *token;
+	int taille;
+	int i = 0;
 
-	char **commands;
+	buffer[_strlen(buffer) - 1] = '\0';
+	taille = count_word(buffer);
+	if (taille == 0)
+		return (NULL);
 
-	commands = strtow(buffer);
-	return (commands);
+	conteneur = malloc((taille + 1) * sizeof(char *));
+	if (!conteneur)
+		return (NULL);
+	token = strtok(buffer, delim);
+	while (token)
+	{
+		conteneur[i] = malloc((_strlen(token) + 1) * sizeof(char));
+		if (!conteneur[i])
+	{
+			free_double_ptr(conteneur);
+			return (NULL);
+		}
+		_strncpy(conteneur[i], token, _strlen(token) + 1);
+		token = strtok(NULL, delim);
+		i++;
+	}
 
-	/*
-	*char *delim = " \n\t\r\f\v";
-	*char **conteneur;
-	*char *token;
-	*int taille;
-	*int i = 0;
-*
-	*buffer[_strlen(buffer) - 1] = '\0';
-	*taille = count_word(buffer);
-	*if (taille == 0)
-	*	return (NULL);
-*
-	*conteneur = malloc((taille + 1) * sizeof(char *));
-	*if (!conteneur)
-	*	return (NULL);
-*
-	*token = strtok(buffer, delim);
-	*while (token)
-	*{
-	*	conteneur[i] = malloc((_strlen(token) + 1) * sizeof(char));
-	*	if (!conteneur[i])
-	*	{
-	*		free_double_ptr(conteneur);
-	*		return (NULL);
-	*	}
-	*	_strncpy(conteneur[i], token, _strlen(token) + 1);
-	*	token = strtok(NULL, delim);
-	*	i++;
-	*}
-*
-	*conteneur[i] = NULL;
-*
+	conteneur[i] = NULL;
+
 	return (conteneur);
-	*/
 }
+
 
 /**
  * fill_directories - fill directories with PATH to test
