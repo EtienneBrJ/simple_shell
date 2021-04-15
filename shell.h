@@ -37,6 +37,7 @@ void free_list(list_t *head);
 list_t *init_list_env(list_t *h);
 size_t listint_len(list_t *h);
 int delete_node_at_index(list_t **head, unsigned int index);
+
 /* main func */
 void print_prompt(void);
 void _execute(char *buffer, char **argv, int cont);
@@ -88,6 +89,12 @@ int _putchar(char c);
 int _atoi(char *s);
 int _isdigit(int c);
 int _isnumber(char *s);
+
+/* strtow */
+int _checkspace(char *str, int i);
+char **strtow(char *str);
+char *_strndup(char *str, int n);
+
 
 void print_number(int n);
 
