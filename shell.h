@@ -90,11 +90,6 @@ int _atoi(char *s);
 int _isdigit(int c);
 int _isnumber(char *s);
 
-/* strtow */
-int _checkspace(char *str, int i);
-char **strtow(char *str);
-char *_strndup(char *str, int n);
-
 
 void print_number(int n);
 
