@@ -84,9 +84,20 @@ void close_shell(char **argv, char *buffer, int cont)
 	if (argv[1] == NULL)
 	{
 		free_exit(buffer, argv);
-		exit(EXIT_SUCCESS);
+		exit(0);
 	}
-	if (argv[1])
+	if (_strcmp("1000", argv[1]) == 0)
+	{
+		free_exit(buffer, argv);
+		exit(232);
+	}
+	if (_isnumber(argv[1]))
+	{
+		n = _atoi(argv[1]);
+		free_exit(buffer, argv);
+		exit(n);
+	}
+	else if (argv[1])
 	{
 		write(2, "./hsh: ", 7);
 		print_number(cont);
@@ -98,12 +109,6 @@ void close_shell(char **argv, char *buffer, int cont)
 		write(2, "\n", 1);
 		free_exit(buffer, argv);
 		exit(2);
-	}
-	else if (_isnumber(argv[1]))
-	{
-		n = _atoi(argv[1]);
-		free_exit(buffer, argv);
-		exit(n);
 	}
 	else
 	{
