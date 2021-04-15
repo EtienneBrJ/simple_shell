@@ -16,7 +16,6 @@ int main(void)
 		signal(SIGINT, ctrlc);
 
 		buffer = _getline();
-
 		argv = fill_argv(buffer);
 		if (argv == NULL)
 		{
@@ -24,7 +23,6 @@ int main(void)
 			continue; }
 		if (_strcmp("env", argv[0]) == 0 && argv[1] == NULL)
 			print_environment();
-
 		if (_strcmp("exit", argv[0]) == 0)
 			close_shell(argv, buffer, cont);
 		if (_strcmp("cd", argv[0]) == 0)
@@ -76,26 +74,30 @@ void path_tester(char **argv, char *buffer, int cont)
 	struct stat st;
 	char **directories;
 	int i = 0;
-	(void)cont;
 
 	directories = fill_directories(argv[0]);
 	while (directories[i])
 	{
 		if (stat(directories[i], &st) == 0)
 			execve(directories[i], argv, NULL);
+
 		i++;
 	}
 	if (stat(argv[0], &st) == 0)
 		execve(argv[0], argv, NULL);
+
+
+
 	/* si on arrive ici c'est que lac commande existe pas*/
 	/*il faudra voir pour print error comme /bin/sh*/
+
 	write(2, "./hsh: ", 7);
 	print_number(cont);
 	write(2, ": ", 2);
 	write(2, argv[0], _strlen(argv[0]));
 	write(2, ": not found\n", 12);
-
 	free(buffer);
+
 	free_double_ptr(argv);
 	free_double_ptr(directories);
 	exit(EXIT_SUCCESS);
