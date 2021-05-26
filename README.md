@@ -1,5 +1,5 @@
-## SIMPLE_SHELL
-
+Simple_shell
+---
 **Duration of the project: 14 days in duo.**
 **Compile with Weverything**
 
